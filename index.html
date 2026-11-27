@@ -1,0 +1,2028 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#186A5B">
+<meta name="description" content="صانع QR من Nasr Digital — ولّد رموز استجابة سريعة مجانية عالية الدقة: روابط، واتساب، نصوص، واي فاي، مع شعارك وألوانك. بدون تسجيل، وبياناتك لا تغادر جهازك.">
+<title>صانع QR - Nasr Digital | مولّد رموز QR مجاني</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23186A5B'/%3E%3Crect x='5' y='5' width='8' height='8' rx='2' fill='none' stroke='white' stroke-width='2.4'/%3E%3Crect x='19' y='5' width='8' height='8' rx='2' fill='none' stroke='white' stroke-width='2.4'/%3E%3Crect x='5' y='19' width='8' height='8' rx='2' fill='none' stroke='white' stroke-width='2.4'/%3E%3Crect x='19' y='19' width='3.4' height='3.4' fill='white'/%3E%3Crect x='24' y='24' width='3.4' height='3.4' fill='white'/%3E%3Crect x='19' y='24.5' width='2.4' height='2.4' fill='white'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============ 1. TOKENS & BASE ============ */
+:root{
+  --emerald:#186A5B; --emerald-2:#1F8A70; --emerald-deep:#0C3F36; --emerald-ink:#0A2E27;
+  --mint:#E9F6F1; --mint-2:#F4FAF7; --line:#DCEDE6; --line-2:#C4E2D6;
+  --ink:#122E28; --ink-2:#41625A; --ink-3:#71908766; --ink-3:#6E8B83;
+  --blue:#2563EB; --cyan:#0E7490; --violet:#7C3AED; --wa:#128C7E;
+  --amber:#D97706; --red:#DC2626; --ok:#16A34A; --info:#0284C7; --lime:#84CC16;
+  --blue-s:#EAF0FE; --cyan-s:#E4F2F7; --violet-s:#F1EBFD; --wa-s:#E4F3F0;
+  --amber-s:#FCF1E2; --red-s:#FDEBEB; --ok-s:#E8F6EC; --info-s:#E6F3FB;
+  --nav-h:68px; --r-lg:20px; --r-md:14px; --r-sm:10px;
+  --sh-sm:0 2px 10px -4px rgba(12,63,54,.10);
+  --sh-md:0 12px 32px -14px rgba(12,63,54,.22);
+  --sh-lg:0 22px 50px -18px rgba(12,63,54,.30);
+  --fd:'Rubik','IBM Plex Sans Arabic',sans-serif;
+  --fb:'IBM Plex Sans Arabic','Rubik',sans-serif;
+  --ease:cubic-bezier(.22,.9,.3,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--fb); background:#FFFFFF; color:var(--ink);
+  font-size:15.5px; line-height:1.75; overflow-x:clip;
+  --bar-offset:0px; -webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--emerald);color:#fff}
+img,svg,canvas{display:block;max-width:100%}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+input,select,textarea{font-family:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:var(--fd);line-height:1.35;text-wrap:balance}
+[hidden]{display:none !important}
+:focus-visible{outline:3px solid rgba(24,106,91,.45);outline-offset:2px;border-radius:6px}
+/* Scrollbars — بلغة التطبيق */
+*{scrollbar-width:thin;scrollbar-color:var(--emerald-2) var(--mint)}
+::-webkit-scrollbar{width:10px;height:8px}
+::-webkit-scrollbar-track{background:var(--mint);border-radius:99px}
+::-webkit-scrollbar-thumb{background:linear-gradient(180deg,var(--emerald-2),var(--emerald));border-radius:99px;border:2px solid var(--mint)}
+::-webkit-scrollbar-thumb:hover{background:var(--emerald-deep)}
+.container{max-width:1200px;margin-inline:auto;padding-inline:22px}
+.section{padding-block:64px;scroll-margin-top:calc(var(--nav-h) + 14px)}
+.skip{position:absolute;inset-inline-start:12px;top:-60px;background:var(--emerald);color:#fff;padding:10 16;border-radius:10px;z-index:200;transition:top .2s}
+.skip:focus{top:12px}
+/* ألوان الأنواع */
+.t-url{--tc:var(--blue);--tcs:var(--blue-s)}
+.t-whatsapp{--tc:var(--wa);--tcs:var(--wa-s)}
+.t-text{--tc:var(--violet);--tcs:var(--violet-s)}
+.t-wifi{--tc:var(--cyan);--tcs:var(--cyan-s)}
+/* ============ 2. BUTTONS / INPUTS ============ */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-weight:600;font-size:14.5px;
+  padding:11px 20px;border-radius:12px;transition:transform .18s var(--ease),box-shadow .25s,background .25s,filter .2s;
+  border:1px solid transparent;white-space:nowrap;user-select:none}
+.btn:active{transform:translateY(1px) scale(.99)}
+.btn svg{width:18px;height:18px;flex:none}
+.btn-primary{background:linear-gradient(135deg,var(--emerald-2),var(--emerald) 55%,#0F5A4C);color:#fff;
+  box-shadow:0 10px 22px -10px rgba(24,106,91,.55)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 30px -12px rgba(24,106,91,.6);filter:brightness(1.06)}
+.btn-ghost{border-color:var(--line-2);color:var(--ink);background:#fff}
+.btn-ghost:hover{background:var(--mint);border-color:var(--emerald-2);color:var(--emerald)}
+.btn-soft{background:var(--mint);color:var(--emerald);border-color:var(--line)}
+.btn-soft:hover{background:#DDF0E8;border-color:var(--line-2)}
+.btn-danger-soft{background:var(--red-s);color:var(--red)}
+.btn-danger-soft:hover{background:#FADDDD}
+.btn-sm{padding:8px 14px;font-size:13.5px;border-radius:10px}
+.btn[disabled]{opacity:.45;pointer-events:none;box-shadow:none}
+.btn.loading{pointer-events:none}
+.btn.loading .b-ic{animation:spin .8s linear infinite}
+.icon-btn{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:10px;
+  border:1px solid var(--line);background:#fff;color:var(--ink-2);transition:all .2s}
+.icon-btn:hover{background:var(--mint);color:var(--emerald);border-color:var(--line-2);transform:translateY(-1px)}
+.icon-btn svg{width:17px;height:17px}
+.icon-btn.danger:hover{background:var(--red-s);color:var(--red);border-color:#F5C6C6}
+.field{margin-bottom:15px}
+.field label,.lbl{display:flex;justify-content:space-between;align-items:center;font-size:13px;font-weight:600;color:var(--ink-2);margin-bottom:7px;gap:8px}
+.inp,select.inp,textarea.inp{width:100%;background:#fff;border:1.5px solid var(--line);border-radius:12px;
+  padding:11px 14px;font-size:15px;transition:border-color .2s,box-shadow .2s;line-height:1.6}
+.inp:focus{outline:none;border-color:var(--emerald-2);box-shadow:0 0 0 4px rgba(24,106,91,.13)}
+.inp.err{border-color:var(--red);box-shadow:0 0 0 4px rgba(220,38,38,.10)}
+textarea.inp{min-height:112px;resize:vertical}
+select.inp{appearance:none;-webkit-appearance:none;cursor:pointer;padding-inline-end:36px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23186A5B' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:left 12px center}
+.hint{font-size:12px;color:var(--ink-3);margin-top:6px}
+.field-err{font-size:12.5px;color:var(--red);margin-top:6px;display:flex;align-items:center;gap:5px;font-weight:600}
+.field-err svg{width:14px;height:14px;flex:none}
+.count{font-size:11.5px;color:var(--ink-3);font-weight:500}
+.count.warn{color:var(--amber);font-weight:700}
+.inp-wrap{position:relative}
+.inp-wrap .inp{padding-inline-end:44px}
+.inp-wrap .icon-btn{position:absolute;inset-inline-end:6px;top:50%;transform:translateY(-50%);border:none;width:32px;height:32px}
+/* مفاتيح التبديل */
+.switch{display:inline-flex;align-items:center;gap:9px;cursor:pointer;user-select:none;font-size:13.5px;font-weight:600;color:var(--ink-2)}
+.switch input{position:absolute;opacity:0;width:1px;height:1px}
+.switch .track{width:40px;height:23px;border-radius:99px;background:#CFE4DB;position:relative;transition:background .25s;flex:none}
+.switch .knob{position:absolute;top:3px;inset-inline-start:3px;width:17px;height:17px;border-radius:50%;background:#fff;
+  box-shadow:0 1px 4px rgba(12,63,54,.35);transition:transform .25s var(--ease)}
+.switch input:checked + .track{background:linear-gradient(135deg,var(--emerald-2),var(--emerald))}
+.switch input:checked + .track .knob{transform:translateX(-17px)}
+.switch input:focus-visible + .track{box-shadow:0 0 0 4px rgba(24,106,91,.25)}
+/* المنزلقات */
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:6px;border-radius:99px;--p:50%;
+  background:linear-gradient(to left,var(--emerald) var(--p),var(--line) var(--p));cursor:pointer}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;height:19px;border-radius:50%;background:#fff;
+  border:3.5px solid var(--emerald);box-shadow:0 2px 6px rgba(12,63,54,.3);transition:transform .15s}
+input[type=range]::-webkit-slider-thumb:hover{transform:scale(1.15)}
+input[type=range]::-moz-range-thumb{width:13px;height:13px;border-radius:50%;background:#fff;border:3.5px solid var(--emerald);box-shadow:0 2px 6px rgba(12,63,54,.3)}
+input[type=range]::-moz-range-track{background:transparent}
+.range-row{display:flex;align-items:center;gap:12px}
+.range-row output{font-size:12.5px;font-weight:700;color:var(--emerald);min-width:64px;text-align:left;font-family:var(--fd)}
+/* منتقيات الألوان */
+input[type=color]{inline-size:38px;block-size:38px;border-radius:11px;border:2px solid var(--line-2);padding:2px;background:#fff;cursor:pointer;transition:transform .15s,border-color .2s}
+input[type=color]:hover{transform:scale(1.08);border-color:var(--emerald-2)}
+input[type=color]::-webkit-color-swatch-wrapper{padding:2px}
+input[type=color]::-webkit-color-swatch{border:none;border-radius:7px}
+input[type=color]::-moz-color-swatch{border:none;border-radius:7px}
+.hex-inp{width:94px;font-family:ui-monospace,'Courier New',monospace;font-size:13px;text-align:center;padding:9px 6px;letter-spacing:.5px}
+.swatches{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.swatch{width:27px;height:27px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1.5px var(--line-2),0 2px 5px rgba(12,63,54,.15);transition:transform .15s}
+.swatch:hover{transform:scale(1.2)}
+.swatch.on{box-shadow:0 0 0 2.5px var(--emerald),0 2px 6px rgba(12,63,54,.2)}
+.color-row{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+/* ============ 3. NAVBAR ============ */
+#navbar{position:fixed;top:0;inset-inline:0;z-index:90;background:rgba(255,255,255,.87);
+  -webkit-backdrop-filter:blur(14px) saturate(1.5);backdrop-filter:blur(14px) saturate(1.5);
+  border-bottom:1px solid transparent;transition:border-color .3s,box-shadow .3s}
+#navbar.scrolled{border-color:var(--line);box-shadow:0 6px 24px -14px rgba(12,63,54,.18)}
+.nav-in{height:var(--nav-h);display:flex;align-items:center;gap:18px}
+.brand{display:flex;align-items:center;gap:10px;flex:none}
+.brand svg{width:34px;height:34px}
+.brand-txt b{font-family:var(--fd);font-size:17.5px;font-weight:800;display:block;line-height:1.2}
+.brand-txt i{font-style:normal;font-size:9.5px;letter-spacing:2.5px;text-transform:uppercase;color:var(--emerald);font-weight:600}
+.nav-links{display:flex;gap:2px;margin-inline:auto}
+.nav-links a{font-size:14px;font-weight:500;color:var(--ink-2);padding:8px 13px;border-radius:10px;transition:all .2s}
+.nav-links a:hover{color:var(--emerald);background:var(--mint)}
+.nav-links a.active{color:var(--emerald);background:var(--mint);font-weight:700}
+.nav-actions{display:flex;align-items:center;gap:10px;margin-inline-start:auto}
+.nav-links + .nav-actions{margin-inline-start:0}
+.free-pill{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:var(--emerald);
+  background:var(--mint);border:1px solid var(--line-2);padding:5px 13px;border-radius:99px}
+.free-pill::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--lime);animation:pulse 2s infinite}
+#menuBtn{display:none}
+#navProgress{position:absolute;bottom:-1px;inset-inline:0;height:2.5px;background:linear-gradient(to left,var(--emerald),var(--cyan),var(--blue));
+  transform:scaleX(0);transform-origin:right;transition:transform .1s linear}
+#mobileMenu{display:none;position:absolute;top:100%;inset-inline:0;background:#fff;border-bottom:1px solid var(--line);
+  box-shadow:var(--sh-md);padding:0 18px;max-height:0;overflow:hidden;transition:max-height .35s var(--ease),padding .35s}
+#navbar.open #mobileMenu{max-height:420px;padding:12px 18px 18px}
+#mobileMenu a{display:block;padding:12px 14px;border-radius:10px;font-size:15px;font-weight:500;color:var(--ink-2)}
+#mobileMenu a:hover,#mobileMenu a.active{background:var(--mint);color:var(--emerald);font-weight:700}
+#mobileMenu .btn{margin-top:8px;width:100%}
+/* ============ 4. HERO ============ */
+.hero{position:relative;padding:calc(var(--nav-h) + 54px) 0 60px;overflow:hidden}
+.hero-bg{position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(540px 400px at 88% 10%,rgba(31,138,112,.15),transparent 65%),
+             radial-gradient(480px 380px at 4% 88%,rgba(14,116,144,.13),transparent 65%),
+             radial-gradient(320px 260px at 55% 112%,rgba(132,204,22,.12),transparent 60%)}
+.hero-bg::before{content:'';position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26'%3E%3Crect x='3' y='3' width='7' height='7' rx='1.5' fill='%23186A5B' fill-opacity='.07'/%3E%3Crect x='16' y='16' width='5' height='5' rx='1' fill='%230E7490' fill-opacity='.06'/%3E%3C/svg%3E");
+  -webkit-mask-image:radial-gradient(720px 520px at 72% 32%,#000,transparent 72%);
+  mask-image:radial-gradient(720px 520px at 72% 32%,#000,transparent 72%)}
+.hero-bg::after{content:'';position:absolute;inset:0;opacity:.035;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E")}
+.hero-grid{position:relative;display:grid;grid-template-columns:1.05fr .95fr;gap:44px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;font-weight:700;color:var(--emerald);
+  background:var(--mint);border:1px solid var(--line-2);padding:6px 14px;border-radius:99px;margin-bottom:18px}
+.eyebrow svg{width:14px;height:14px}
+.hero h1{font-size:clamp(1.95rem,4.4vw,3.15rem);font-weight:800;letter-spacing:-.5px;margin-bottom:16px}
+.hero h1 .grad{background:linear-gradient(115deg,var(--emerald) 8%,var(--cyan) 55%,var(--blue));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-lead{font-size:16.5px;color:var(--ink-2);max-width:52ch;margin-bottom:18px}
+.trust{display:flex;flex-wrap:wrap;gap:8px 18px;margin-bottom:26px}
+.trust span{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--ink-2)}
+.trust svg{width:16px;height:16px}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap}
+.hero-ctas .btn{padding:13px 26px;font-size:15.5px}
+.hero-stats{display:flex;gap:28px;margin-top:32px;flex-wrap:wrap}
+.hero-stats div b{font-family:var(--fd);font-size:23px;font-weight:800;color:var(--emerald);display:block;line-height:1.2}
+.hero-stats div b small{font-size:12px;font-weight:600}
+.hero-stats div span{font-size:12px;color:var(--ink-3);font-weight:600}
+.hero-stats div{position:relative;padding-inline-start:0}
+.hero-art{position:relative;justify-self:center;width:min(370px,100%)}
+.hero-art .scanframe{transform:rotate(-2.5deg);transition:transform .55s cubic-bezier(.34,1.56,.64,1);cursor:pointer;background:#fff}
+.hero-art .scanframe:hover{transform:rotate(0) scale(1.025)}
+.hero-cap{font-size:12.5px;color:var(--ink-3);text-align:center;margin-top:15px;font-weight:500}
+.pill{position:absolute;z-index:3;display:inline-flex;align-items:center;gap:7px;background:#fff;border:1px solid var(--line);
+  box-shadow:var(--sh-md);border-radius:99px;padding:8px 15px;font-size:13px;font-weight:700;color:var(--tc);animation:float 5.5s ease-in-out infinite}
+.pill svg{width:16px;height:16px}
+.pill-1{top:-16px;inset-inline-start:-14px;animation-delay:.2s}
+.pill-2{bottom:52px;inset-inline-end:-30px;animation-delay:1.4s}
+.pill-3{top:44%;inset-inline-start:-38px;animation-delay:2.6s}
+.spark{position:absolute;color:var(--lime);animation:float 6s ease-in-out infinite}
+.spark-1{top:-28px;inset-inline-end:22px;width:22px}
+.spark-2{bottom:-8px;inset-inline-start:30px;width:15px;color:var(--cyan);animation-delay:2s}
+/* إطار المسح */
+.scanframe{position:relative;background:var(--mint-2);border:1px solid var(--line);border-radius:20px;padding:16px;box-shadow:var(--sh-md)}
+.scanframe canvas{width:100%;height:auto;border-radius:10px}
+.scanframe .corner{position:absolute;width:22px;height:22px;border:3.5px solid var(--emerald);opacity:.9}
+.corner.tl{top:7px;inset-inline-start:7px;border-inline-end:none;border-bottom:none;border-start-start-radius:9px}
+.corner.tr{top:7px;inset-inline-end:7px;border-inline-start:none;border-bottom:none;border-start-end-radius:9px}
+.corner.bl{bottom:7px;inset-inline-start:7px;border-inline-end:none;border-top:none;border-end-start-radius:9px}
+.corner.br{bottom:7px;inset-inline-end:7px;border-inline-start:none;border-top:none;border-end-end-radius:9px}
+.sweep{position:absolute;inset-inline:15px;top:15px;height:56px;opacity:0;pointer-events:none;border-radius:6px;
+  background:linear-gradient(180deg,transparent,rgba(24,106,91,.09) 68%,rgba(24,106,91,.24));
+  border-bottom:2px solid rgba(31,138,112,.85)}
+.scanframe.valid .sweep{animation:sweep 4s ease-in-out infinite}
+.checker{background:repeating-conic-gradient(#EDF5F1 0% 25%,#DCE9E3 0% 50%) 0 0/16px 16px !important}
+/* ============ 5. WORKSPACE ============ */
+.sec-head{margin-bottom:30px}
+.sec-head h2{font-size:clamp(1.45rem,2.8vw,2.05rem);font-weight:800;margin-bottom:8px}
+.sec-head .lead{color:var(--ink-2);font-size:15px;max-width:64ch}
+.steps{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.steps span{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--ink-2);
+  background:#fff;border:1px solid var(--line);border-radius:99px;padding:5px 13px}
+.steps b{width:20px;height:20px;border-radius:50%;background:var(--emerald);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11.5px;font-family:var(--fd)}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) 400px;grid-template-rows:auto 1fr;
+  grid-template-areas:"data preview" "style preview";gap:22px;align-items:start}
+.card{background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;box-shadow:var(--sh-sm)}
+.card-data{grid-area:data}
+.card-style{grid-area:style}
+.preview-col{grid-area:preview;position:sticky;top:calc(var(--nav-h) + 16px)}
+.card-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}
+.card-title{display:flex;align-items:center;gap:11px}
+.card-title .tile{width:36px;height:36px;border-radius:11px;background:var(--mint);color:var(--emerald);display:flex;align-items:center;justify-content:center;flex:none}
+.card-title .tile svg{width:18px;height:18px}
+.card-title h3{font-size:16.5px;font-weight:700}
+.card-title small{display:block;font-size:11.5px;color:var(--ink-3);font-weight:500;font-family:var(--fb)}
+.head-actions{display:flex;gap:7px}
+/* التبويبات */
+.tabs{position:relative;display:grid;grid-template-columns:repeat(4,1fr);background:var(--mint-2);border:1px solid var(--line);
+  border-radius:14px;padding:4px;margin-bottom:20px}
+#tabInd{position:absolute;top:4px;bottom:4px;border-radius:10px;background:linear-gradient(135deg,var(--emerald-2),var(--emerald));
+  box-shadow:0 4px 12px -4px rgba(24,106,91,.5);transition:left .35s var(--ease),width .35s var(--ease)}
+.tabs button{position:relative;z-index:1;display:flex;align-items:center;justify-content:center;gap:7px;padding:10px 4px;
+  font-size:13.5px;font-weight:700;color:var(--ink-2);border-radius:10px;transition:color .25s}
+.tabs button svg{width:16px;height:16px;color:var(--tc)}
+.tabs button:hover{color:var(--emerald)}
+.tabs button[aria-selected="true"]{color:#fff}
+.tabs button[aria-selected="true"] svg{color:#fff}
+.type-form{animation:fadeUp .35s var(--ease)}
+.form-title{font-size:13px;font-weight:700;color:var(--emerald);margin-bottom:12px;display:flex;align-items:center;gap:7px}
+.form-title svg{width:15px;height:15px}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.phone-grid{display:grid;grid-template-columns:118px 1fr;gap:10px}
+.payload-bar{display:flex;align-items:center;gap:10px;background:var(--mint-2);border:1px solid var(--line);
+  border-radius:12px;padding:9px 12px;margin-top:18px}
+.payload-bar .p-lbl{font-size:11.5px;font-weight:700;color:var(--emerald);flex:none}
+.payload-bar code{flex:1;min-width:0;font-family:ui-monospace,'Courier New',monospace;font-size:12px;color:var(--ink-2);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}
+.payload-bar .icon-btn{width:30px;height:30px;flex:none}
+/* ============ 6. PREVIEW ============ */
+.session-chip{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;color:var(--emerald);
+  background:var(--mint);border:1px solid var(--line-2);border-radius:99px;padding:4px 11px;white-space:nowrap}
+.session-chip svg{width:13px;height:13px}
+.session-chip.pop{animation:pop .4s var(--ease)}
+#previewFrame{min-height:200px}
+.pv-overlay{position:absolute;inset:16px;border-radius:10px;background:rgba(244,250,247,.97);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:10px;text-align:center;padding:20px;z-index:2}
+.pv-overlay .big{width:76px;height:76px;color:var(--line-2)}
+.pv-overlay .msg{font-size:14px;font-weight:700;color:var(--ink-2);max-width:26ch}
+.pv-overlay .sub{font-size:12px;color:var(--ink-3)}
+.pv-overlay.error .big{color:#F0B4B4}
+.spinner{width:30px;height:30px;border-radius:50%;border:3.5px solid var(--line);border-top-color:var(--emerald);animation:spin .8s linear infinite}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px;min-height:27px}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:700;border-radius:99px;padding:4px 11px;border:1px solid;animation:fadeUp .3s var(--ease)}
+.chip svg{width:13px;height:13px;flex:none}
+.chip.ok{background:var(--ok-s);color:var(--ok);border-color:#CBE9D3}
+.chip.warn{background:var(--amber-s);color:var(--amber);border-color:#F3DFC0}
+.chip.info{background:var(--info-s);color:var(--info);border-color:#CBE6F6}
+.chip.type{background:var(--tcs);color:var(--tc);border-color:transparent}
+.chip .dot{width:7px;height:7px;border-radius:50%;background:var(--ok);animation:pulse 2s infinite}
+.chip button{font-size:11.5px;font-weight:800;text-decoration:underline;text-underline-offset:3px;color:inherit}
+.qr-meta{font-size:11.5px;color:var(--ink-3);margin-top:9px;font-weight:500;font-variant-numeric:tabular-nums}
+.export-block{border-top:1px solid var(--line);margin-top:16px;padding-top:16px}
+.export-block .lbl{margin-bottom:9px}
+.export-row{display:flex;gap:10px}
+.export-row select{width:128px;flex:none;font-size:13.5px;font-variant-numeric:tabular-nums}
+.export-row .btn{flex:1}
+.export-row3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.export-row3 .btn{padding:9px 6px;font-size:13px}
+/* ============ 7. STYLE CARD ============ */
+.sg{padding-block:16px;border-top:1px solid var(--line)}
+.sg:first-of-type{border-top:none;padding-top:0}
+.sg-title{display:flex;align-items:center;gap:8px;font-size:13.5px;font-weight:700;color:var(--ink);margin-bottom:12px}
+.sg-title svg{width:16px;height:16px;color:var(--emerald)}
+.sg-title .switch{margin-inline-start:auto}
+.sub-open{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s var(--ease)}
+.sub-open > div{overflow:hidden}
+.sub-open.open{grid-template-rows:1fr}
+.grad-inner{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding-top:12px}
+.grad-inner .range-row{flex:1;min-width:170px}
+.tiles-wrap{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.tile-btn{border:1.5px solid var(--line);border-radius:12px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:6px;
+  background:#fff;color:var(--ink-2);transition:all .2s}
+.tile-btn svg{width:28px;height:28px}
+.tile-btn span{font-size:11.5px;font-weight:700}
+.tile-btn:hover{border-color:var(--line-2);transform:translateY(-1px)}
+.tile-btn[aria-pressed="true"]{border-color:var(--emerald);background:var(--mint);color:var(--emerald);box-shadow:0 0 0 3px rgba(24,106,91,.12)}
+.dropzone{border:2px dashed var(--line-2);border-radius:14px;padding:20px 14px;text-align:center;cursor:pointer;transition:all .25s;background:#fff}
+.dropzone:hover,.dropzone.drag{border-color:var(--emerald-2);background:var(--mint-2)}
+.dropzone.drag{transform:scale(1.015);box-shadow:0 0 0 4px rgba(24,106,91,.12)}
+.dropzone svg{width:26px;height:26px;color:var(--emerald);margin:0 auto 8px}
+.dropzone b{font-size:13.5px;display:block}
+.dropzone small{font-size:11.5px;color:var(--ink-3)}
+.logo-row{display:flex;align-items:center;gap:12px}
+.logo-thumb{width:56px;height:56px;border-radius:12px;border:1px solid var(--line);object-fit:contain;padding:5px;flex:none;
+  background:repeating-conic-gradient(#EDF5F1 0% 25%,#DCE9E3 0% 50%) 0 0/12px 12px}
+.logo-row .l-name{flex:1;min-width:0;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logo-controls{margin-top:14px;display:grid;gap:12px}
+.note{display:flex;gap:7px;align-items:flex-start;font-size:12px;color:var(--info);background:var(--info-s);
+  border:1px solid #CBE6F6;border-radius:10px;padding:8px 11px;margin-top:10px;font-weight:600}
+.note svg{width:14px;height:14px;flex:none;margin-top:3px}
+.disabled-look{opacity:.5;pointer-events:none}
+/* ============ 8. TEMPLATES / HISTORY / FEATURES / FAQ ============ */
+.section-tint{background:linear-gradient(180deg,#F5FBF8,#FFFFFF);border-block:1px solid var(--line)}
+.tpl-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.tpl{background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:20px;display:flex;flex-direction:column;gap:11px;
+  transition:all .25s var(--ease)}
+.tpl:hover{transform:translateY(-5px);box-shadow:var(--sh-md);border-color:var(--tc)}
+.tpl-top{display:flex;align-items:center;gap:11px}
+.tpl-ic{width:42px;height:42px;border-radius:12px;background:var(--tcs);color:var(--tc);display:flex;align-items:center;justify-content:center;flex:none}
+.tpl-ic svg{width:20px;height:20px}
+.tpl h3{font-size:15px;font-weight:700}
+.tpl p{font-size:12.5px;color:var(--ink-2);line-height:1.7;flex:1}
+.tpl .btn{background:var(--tcs);color:var(--tc);font-size:13px;padding:9px;width:100%}
+.tpl .btn:hover{background:var(--tc);color:#fff}
+.h-toolbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:22px}
+.search-wrap{position:relative;flex:1;min-width:200px;max-width:280px}
+.search-wrap svg{position:absolute;inset-inline-start:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--ink-3);pointer-events:none}
+.search-wrap .inp{padding-inline-start:38px;font-size:14px;padding-block:9px}
+.h-chips{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;max-width:100%}
+.h-chip{flex:none;display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:700;color:var(--ink-2);
+  border:1.5px solid var(--line);background:#fff;border-radius:99px;padding:6px 13px;transition:all .2s}
+.h-chip small{opacity:.65;font-weight:600}
+.h-chip:hover{border-color:var(--line-2);background:var(--mint-2)}
+.h-chip.on{background:var(--emerald);border-color:var(--emerald);color:#fff}
+.h-toolbar select{width:150px;font-size:13px;padding-block:9px}
+.h-count{font-size:12px;font-weight:700;color:var(--emerald);background:var(--mint);border-radius:99px;padding:3px 11px}
+.h-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:16px}
+.hcard{background:#fff;border:1.5px solid var(--line);border-radius:16px;overflow:hidden;transition:all .25s var(--ease);animation:fadeUp .4s var(--ease) both;animation-delay:calc(var(--d)*45ms)}
+.hcard:hover{transform:translateY(-4px);box-shadow:var(--sh-md);border-color:var(--line-2)}
+.hthumb{background:repeating-conic-gradient(#F2F8F5 0% 25%,#E4EFE9 0% 50%) 0 0/14px 14px;border-bottom:1px solid var(--line);padding:14px;display:flex;justify-content:center}
+.hthumb img{width:112px;height:112px;object-fit:contain}
+.hbody{padding:13px 15px 11px}
+.hbody h4{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hsnip{font-family:ui-monospace,'Courier New',monospace;font-size:11px;color:var(--ink-3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left;margin-block:3px 8px}
+.hmeta{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.badge{font-size:11px;font-weight:700;background:var(--tcs);color:var(--tc);border-radius:99px;padding:2.5px 10px}
+.hmeta time{font-size:11px;color:var(--ink-3)}
+.hactions{display:flex;border-top:1px solid var(--line)}
+.hactions button{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 4px;font-size:12px;font-weight:700;color:var(--ink-2);transition:all .2s}
+.hactions button svg{width:15px;height:15px}
+.hactions button:hover{background:var(--mint);color:var(--emerald)}
+.hactions button.danger:hover{background:var(--red-s);color:var(--red)}
+.hactions button + button{border-inline-start:1px solid var(--line)}
+.h-empty{text-align:center;padding:52px 20px;border:2px dashed var(--line);border-radius:18px;background:var(--mint-2)}
+.h-empty svg{width:64px;height:64px;color:var(--line-2);margin:0 auto 14px}
+.h-empty b{display:block;font-size:16px;margin-bottom:5px}
+.h-empty p{font-size:13.5px;color:var(--ink-2);margin-bottom:16px}
+.feat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px}
+.feat{background:#fff;border:1.5px solid var(--line);border-radius:18px;padding:22px;transition:all .25s var(--ease)}
+.feat:hover{transform:translateY(-4px);box-shadow:var(--sh-md);border-color:var(--tc)}
+.feat .tpl-ic{margin-bottom:14px}
+.feat h3{font-size:15.5px;font-weight:700;margin-bottom:6px}
+.feat p{font-size:13px;color:var(--ink-2);line-height:1.8}
+.privacy{position:relative;overflow:hidden;border-radius:22px;padding:32px;display:flex;align-items:center;gap:28px;
+  background:linear-gradient(130deg,var(--emerald-deep),var(--emerald) 58%,var(--cyan));color:#fff;box-shadow:var(--sh-lg)}
+.privacy::before{content:'';position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26'%3E%3Crect x='3' y='3' width='7' height='7' rx='1.5' fill='white' fill-opacity='.06'/%3E%3Crect x='16' y='16' width='5' height='5' rx='1' fill='white' fill-opacity='.05'/%3E%3C/svg%3E")}
+.privacy > *{position:relative}
+.privacy .p-ic{width:62px;height:62px;flex:none;color:#CFF5E9}
+.privacy h3{font-size:20px;font-weight:800;margin-bottom:6px}
+.privacy p{font-size:14px;color:#DFF2EC;max-width:52ch}
+.p-stats{display:flex;gap:30px;margin-inline-start:auto;flex:none}
+.p-stats div{text-align:center}
+.p-stats b{font-family:var(--fd);font-size:27px;font-weight:800;color:#BEF264;display:block;line-height:1.2}
+.p-stats span{font-size:11.5px;color:#CDE9E1;font-weight:600}
+.faq-list{max-width:780px;margin-inline:auto;display:grid;gap:11px}
+.faq-item{border:1.5px solid var(--line);border-radius:14px;background:#fff;transition:border-color .25s}
+.faq-item.open{border-color:var(--line-2);box-shadow:var(--sh-sm)}
+.faq-q{width:100%;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:16px 18px;font-size:15px;font-weight:700;text-align:start;color:var(--ink)}
+.faq-item.open .faq-q{color:var(--emerald)}
+.faq-q svg{width:18px;height:18px;flex:none;color:var(--emerald);transition:transform .3s var(--ease)}
+.faq-item.open .faq-q svg{transform:rotate(180deg)}
+.faq-a{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s var(--ease)}
+.faq-item.open .faq-a{grid-template-rows:1fr}
+.faq-a > div{overflow:hidden}
+.faq-a p{padding:0 18px 17px;font-size:14px;color:var(--ink-2);line-height:1.9}
+/* ============ 9. FOOTER & FLOATING ============ */
+footer{background:var(--emerald-ink);color:#CFE7DF;margin-top:30px;position:relative;overflow:hidden}
+footer::before{content:'';position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26'%3E%3Crect x='3' y='3' width='7' height='7' rx='1.5' fill='white' fill-opacity='.03'/%3E%3C/svg%3E")}
+.foot-grid{position:relative;display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:36px;padding-block:50px 36px}
+.foot-brand .brand-txt b{color:#fff}
+.foot-brand .brand-txt i{color:#7FD1BE}
+.foot-brand p{font-size:13.5px;line-height:1.9;color:#A8CCC2;margin-block:14px 18px;max-width:40ch}
+.btn-outline-light{border:1.5px solid rgba(207,231,223,.35);color:#E7F5F0;font-size:13.5px;padding:9px 18px;border-radius:11px;display:inline-flex;align-items:center;gap:8px;transition:all .2s}
+.btn-outline-light:hover{background:rgba(255,255,255,.09);border-color:#7FD1BE}
+.btn-outline-light svg{width:16px;height:16px}
+footer h4{color:#fff;font-size:14.5px;margin-bottom:15px}
+.foot-links{display:grid;gap:9px}
+.foot-links a{font-size:13.5px;color:#A8CCC2;transition:color .2s;width:fit-content}
+.foot-links a:hover{color:#fff}
+.foot-types{display:flex;flex-wrap:wrap;gap:8px}
+.foot-types button{border:1.5px solid rgba(207,231,223,.28);border-radius:99px;padding:6px 14px;font-size:12.5px;font-weight:600;color:#CDE9E1;transition:all .2s}
+.foot-types button:hover{border-color:#BEF264;color:#fff;transform:translateY(-1px)}
+.foot-bottom{position:relative;border-top:1px solid rgba(255,255,255,.1);padding-block:17px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;font-size:12.5px;color:#8FB5AA}
+.foot-bottom a{color:#A8CCC2;text-decoration:underline;text-underline-offset:3px}
+.foot-bottom a:hover{color:#fff}
+#toTop{position:fixed;bottom:calc(18px + var(--bar-offset));inset-inline-end:18px;width:45px;height:45px;border-radius:50%;
+  background:linear-gradient(135deg,var(--emerald-2),var(--emerald));color:#fff;display:flex;align-items:center;justify-content:center;
+  box-shadow:var(--sh-md);z-index:70;opacity:0;pointer-events:none;transform:translateY(10px);transition:all .3s var(--ease)}
+#toTop.show{opacity:1;pointer-events:auto;transform:none}
+#toTop:hover{background:var(--emerald-deep)}
+#toTop svg{width:19px;height:19px}
+/* شريط الجوال */
+#mobileBar{position:fixed;bottom:0;inset-inline:0;z-index:80;display:none;align-items:center;gap:12px;
+  padding:10px 16px calc(10px + env(safe-area-inset-bottom));background:rgba(255,255,255,.94);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-top:1px solid var(--line);
+  box-shadow:0 -8px 28px -14px rgba(12,63,54,.25);transform:translateY(110%);transition:transform .35s var(--ease)}
+#mobileBar canvas{width:46px;height:46px;border-radius:9px;border:1px solid var(--line);flex:none}
+#mobileBar .mb-txt{flex:1;min-width:0}
+#mobileBar .mb-txt b{font-size:12.5px;display:block;line-height:1.4}
+#mobileBar .mb-txt span{font-size:11px;color:var(--ok);font-weight:700}
+/* التوستات */
+#toasts{position:fixed;bottom:calc(16px + var(--bar-offset));inset-inline-start:16px;z-index:120;display:flex;flex-direction:column;gap:9px;max-width:min(370px,calc(100vw - 32px))}
+.toast{position:relative;display:flex;align-items:flex-start;gap:10px;background:#fff;border:1px solid var(--line);border-radius:14px;
+  box-shadow:var(--sh-lg);padding:12px 14px 14px;overflow:hidden;opacity:0;transform:translateX(26px);transition:all .35s var(--ease)}
+.toast.show{opacity:1;transform:none}
+.toast.hide{opacity:0;transform:translateX(26px)}
+.toast .t-ic{width:20px;height:20px;flex:none;margin-top:2px}
+.toast.ok .t-ic{color:var(--ok)} .toast.warn .t-ic{color:var(--amber)} .toast.danger .t-ic{color:var(--red)} .toast.info .t-ic{color:var(--info)}
+.toast .t-msg{flex:1;font-size:13.5px;font-weight:600;line-height:1.6}
+.toast .t-act{font-size:13px;font-weight:800;color:var(--emerald);text-decoration:underline;text-underline-offset:3px;flex:none;margin-top:2px}
+.toast .t-x{color:var(--ink-3);flex:none;width:22px;height:22px;display:flex;align-items:center;justify-content:center;border-radius:6px}
+.toast .t-x:hover{background:var(--mint);color:var(--ink)}
+.toast .t-x svg{width:13px;height:13px}
+.toast .t-bar{position:absolute;bottom:0;inset-inline:0;height:3px;transform-origin:right;animation:tbar linear forwards}
+.toast.ok .t-bar{background:var(--ok)} .toast.warn .t-bar{background:var(--amber)} .toast.danger .t-bar{background:var(--red)} .toast.info .t-bar{background:var(--info)}
+/* ============ 10. MOTION ============ */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .7s var(--ease),transform .7s var(--ease);transition-delay:calc(var(--d,0)*90ms)}
+.reveal.in{opacity:1;transform:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.8)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{transform:scale(.92)}60%{transform:scale(1.06)}100%{transform:scale(1)}}
+@keyframes qrpop{from{opacity:.55;transform:scale(.982)}to{opacity:1;transform:scale(1)}}
+@keyframes sweep{0%{top:15px;opacity:0}9%{opacity:1}48%{top:calc(100% - 74px);opacity:1}58%{opacity:0}100%{top:calc(100% - 74px);opacity:0}}
+@keyframes tbar{from{transform:scaleX(1)}to{transform:scaleX(0)}}
+.qr-pop{animation:qrpop .24s var(--ease)}
+noscript .ns{display:block;background:var(--red-s);color:var(--red);text-align:center;padding:14px;font-weight:700;margin-top:var(--nav-h)}
+/* ============ 11. RESPONSIVE ============ */
+@media (max-width:1080px){
+  .workspace{grid-template-columns:minmax(0,1fr) 350px}
+  .tpl-grid,.feat-grid{grid-template-columns:repeat(2,1fr)}
+  .p-stats{gap:20px}
+}
+@media (max-width:920px){
+  .nav-links{display:none}
+  #menuBtn{display:inline-flex}
+  #mobileMenu{display:block}
+  .hero{padding-top:calc(var(--nav-h) + 36px)}
+  .hero-grid{grid-template-columns:1fr;gap:48px}
+  .hero-art{width:min(330px,88%)}
+  .pill-3{display:none}
+  .pill-2{inset-inline-end:-12px}
+  .workspace{grid-template-columns:1fr;grid-template-rows:auto;grid-template-areas:"data" "preview" "style"}
+  .preview-col{position:static}
+  #mobileBar{display:flex}
+  body.bar-on{--bar-offset:80px;padding-bottom:80px}
+  body.bar-on #mobileBar{transform:none}
+  .privacy{flex-direction:column;text-align:center;gap:18px;padding:28px 22px}
+  .p-stats{margin-inline-start:0}
+  .privacy p{margin-inline:auto}
+}
+@media (max-width:640px){
+  .container{padding-inline:15px}
+  .section{padding-block:48px}
+  .card{padding:17px}
+  .free-pill{display:none}
+  .grid-2,.tiles-wrap{grid-template-columns:1fr}
+  .hero-stats{gap:20px}
+  .h-toolbar select{width:130px}
+  .search-wrap{max-width:none}
+  .foot-grid{grid-template-columns:1fr;gap:28px;padding-block:38px 28px}
+  .tabs button{font-size:12.5px;gap:5px}
+  .export-row3 .btn{font-size:12px;gap:5px}
+  .export-row3 .btn svg{width:15px;height:15px}
+}
+@media (max-width:560px){
+  .tpl-grid,.feat-grid{grid-template-columns:1fr}
+  .h-grid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+  .hero-ctas .btn{flex:1;justify-content:center}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important}
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#generator">تخطَّ إلى المولّد</a>
+<noscript><div class="ns">هذا التطبيق يتطلب تفعيل JavaScript ليعمل — جميع المعالجة تتم داخل متصفحك.</div></noscript>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="navbar" aria-label="التنقل الرئيسي">
+  <div class="container nav-in">
+    <a class="brand" href="#top" aria-label="صانع QR — الرئيسية">
+      <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#186A5B"/><rect x="5" y="5" width="8" height="8" rx="2" fill="none" stroke="#fff" stroke-width="2.4"/><rect x="19" y="5" width="8" height="8" rx="2" fill="none" stroke="#fff" stroke-width="2.4"/><rect x="5" y="19" width="8" height="8" rx="2" fill="none" stroke="#fff" stroke-width="2.4"/><rect x="19" y="19" width="3.4" height="3.4" fill="#fff"/><rect x="24" y="24" width="3.4" height="3.4" fill="#fff"/><rect x="19" y="24.5" width="2.4" height="2.4" fill="#BEF264"/></svg>
+      <span class="brand-txt"><b>صانع QR</b><i>Nasr Digital</i></span>
+    </a>
+    <div class="nav-links">
+      <a href="#generator" data-navlink="generator">المولّد</a>
+      <a href="#templates" data-navlink="templates">القوالب</a>
+      <a href="#history" data-navlink="history">السجل</a>
+      <a href="#features" data-navlink="features">المميزات</a>
+      <a href="#faq" data-navlink="faq">الأسئلة</a>
+    </div>
+    <div class="nav-actions">
+      <span class="free-pill">مجاني 100٪</span>
+      <a class="btn btn-primary btn-sm" href="#generator">ابدأ الآن</a>
+      <button id="menuBtn" class="icon-btn" aria-label="القائمة" aria-expanded="false">
+        <svg id="icMenu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        <svg id="icClose" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" hidden><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </div>
+  <div id="navProgress" aria-hidden="true"></div>
+  <div id="mobileMenu">
+    <a href="#generator" data-navlink="generator">المولّد</a>
+    <a href="#templates" data-navlink="templates">القوالب الجاهزة</a>
+    <a href="#history" data-navlink="history">رموزي المحفوظة</a>
+    <a href="#features" data-navlink="features">المميزات</a>
+    <a href="#faq" data-navlink="faq">الأسئلة الشائعة</a>
+    <a class="btn btn-primary" href="#generator">ابدأ التوليد مجاناً</a>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<header class="hero" id="top">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <span class="eyebrow reveal" style="--d:0">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.1 5.6 5.6 2.1-5.6 2.1L12 17.9l-2.1-5.6-5.6-2.1 5.6-2.1zM19.5 15l1 2.6 2.6 1-2.6 1-1 2.6-1-2.6-2.6-1 2.6-1z"/></svg>
+        أداة مجانية من Nasr Digital
+      </span>
+      <h1 class="reveal" style="--d:1">حوّل أي رابط أو رسالة إلى <span class="grad">رمز QR أنيق</span> في ثوانٍ</h1>
+      <p class="hero-lead reveal" style="--d:2">ولّد رموز استجابة سريعة عالية الدقة بشعارك وألوانك — روابط، واتساب، نصوص وشبكات واي فاي. بدون تسجيل، بدون علامة مائية، وبياناتك لا تغادر جهازك أبداً.</p>
+      <div class="trust reveal" style="--d:3">
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="#186A5B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>خصوصية تامة</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>توليد فوري</span>
+        <span><svg viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>بدون علامة مائية</span>
+      </div>
+      <div class="hero-ctas reveal" style="--d:4">
+        <a class="btn btn-primary" href="#generator">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+          ابدأ التوليد مجاناً
+        </a>
+        <a class="btn btn-ghost" href="#templates">استكشف القوالب</a>
+      </div>
+      <div class="hero-stats reveal" style="--d:5">
+        <div><b>٤</b><span>أنواع بيانات</span></div>
+        <div><b>٣ × ٣</b><span>أنماط نقاط وعيون</span></div>
+        <div><b>2048<small>px</small></b><span>دقة التصدير</span></div>
+      </div>
+    </div>
+    <div class="hero-art reveal" style="--d:2">
+      <span class="pill pill-1 t-url"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>رابط موقع</span>
+      <span class="pill pill-2 t-wifi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><circle cx="12" cy="19.5" r="1.2" fill="currentColor" stroke="none"/></svg>واي فاي</span>
+      <span class="pill pill-3 t-whatsapp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-2.9-.4-4.1-1L3 20l1.1-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg>واتساب</span>
+      <svg class="spark spark-1" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.1 5.6 5.6 2.1-5.6 2.1L12 17.9l-2.1-5.6-5.6-2.1 5.6-2.1z"/></svg>
+      <svg class="spark spark-2" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.5l2.1 5.6 5.6 2.1-5.6 2.1L12 17.9l-2.1-5.6-5.6-2.1 5.6-2.1z"/></svg>
+      <div class="scanframe valid" id="heroCard" title="امسح الرمز أو انقر للانتقال إلى المولّد">
+        <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+        <canvas id="heroQr" width="560" height="560" role="img" aria-label="رمز QR لفتح هذه الأداة على هاتفك"></canvas>
+        <div class="sweep" aria-hidden="true"></div>
+      </div>
+      <p class="hero-cap">📱 امسح الرمز بكاميرا هاتفك لفتح الأداة مباشرة</p>
+    </div>
+  </div>
+</header>
+
+<main>
+<!-- ===== GENERATOR ===== -->
+<section class="section" id="generator">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">المولّد</span>
+      <h2>صمّم رمزك خطوة بخطوة</h2>
+      <p class="lead">اختر نوع البيانات، أدخل المحتوى، ثم خصّص الألوان والشعار — كل شيء يتحدّث أمامك لحظياً.</p>
+      <div class="steps"><span><b>١</b>اختر النوع</span><span><b>٢</b>أدخل البيانات</span><span><b>٣</b>خصّص وحمّل</span></div>
+    </div>
+
+    <div class="workspace">
+      <!-- بطاقة البيانات -->
+      <div class="card card-data reveal" id="cardData" style="--d:1">
+        <div class="card-head">
+          <div class="card-title">
+            <span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><path d="M14 14h3v3h-3zM18 18h3v3h-3z"/></svg></span>
+            <div><h3>بيانات الرمز</h3><small>تتحدّث المعاينة فوراً أثناء الكتابة</small></div>
+          </div>
+        </div>
+        <div class="tabs" id="tabsWrap" role="tablist" aria-label="نوع البيانات">
+          <span id="tabInd" aria-hidden="true"></span>
+          <button role="tab" data-type="url" class="t-url" aria-selected="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>رابط
+          </button>
+          <button role="tab" data-type="whatsapp" class="t-whatsapp" aria-selected="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-2.9-.4-4.1-1L3 20l1.1-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg>واتساب
+          </button>
+          <button role="tab" data-type="text" class="t-text" aria-selected="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>نص
+          </button>
+          <button role="tab" data-type="wifi" class="t-wifi" aria-selected="false">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2.5 9a15 15 0 0 1 19 0"/><path d="M5.5 12.5a10.5 10.5 0 0 1 13 0"/><path d="M8.5 16a6 6 0 0 1 7 0"/><circle cx="12" cy="19.3" r="1.2" fill="currentColor" stroke="none"/></svg>واي فاي
+          </button>
+        </div>
+
+        <!-- رابط -->
+        <div class="type-form" id="form-url">
+          <div class="form-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>رابط الموقع الإلكتروني</div>
+          <div class="field">
+            <label for="urlInput">الرابط (URL)</label>
+            <input class="inp" id="urlInput" type="url" inputmode="url" dir="ltr" maxlength="500" placeholder="https://example.com" autocomplete="off" spellcheck="false">
+            <p class="hint">يدعم https و mailto و tel — يُضاف <b dir="ltr">https://</b> تلقائياً إن لم تكتبه.</p>
+            <p class="field-err" id="urlErr" hidden></p>
+          </div>
+        </div>
+
+        <!-- واتساب -->
+        <div class="type-form" id="form-whatsapp" hidden>
+          <div class="form-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-2.9-.4-4.1-1L3 20l1.1-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg>رسالة واتساب مباشرة — بدون حفظ الرقم</div>
+          <div class="field">
+            <label for="waPhone">رقم الهاتف</label>
+            <div class="phone-grid">
+              <div>
+                <select class="inp" id="waCC" aria-label="مفتاح الدولة" style="padding-inline-end:30px;font-size:13.5px"></select>
+              </div>
+              <input class="inp" id="waPhone" type="tel" inputmode="tel" dir="ltr" maxlength="16" placeholder="5X XXX XXXX" autocomplete="off">
+            </div>
+            <p class="field-err" id="waErr" hidden></p>
+          </div>
+          <div class="field">
+            <label for="waMsg">نص الرسالة (اختياري) <span class="count" id="waMsgCount">0/600</span></label>
+            <textarea class="inp" id="waMsg" dir="auto" maxlength="600" rows="3" placeholder="مرحباً! أود الاستفسار عن…"></textarea>
+            <p class="hint">عند المسح تُفتح محادثة واتساب مع الرقم والنص جاهزَين للإرسال.</p>
+          </div>
+        </div>
+
+        <!-- نص -->
+        <div class="type-form" id="form-text" hidden>
+          <div class="form-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg>نص حرّ — عربي، إنجليزي، رموز تعبيرية</div>
+          <div class="field">
+            <label for="textInput">النص <span class="count" id="textCount">0 حرف · 0 بايت</span></label>
+            <textarea class="inp" id="textInput" dir="auto" maxlength="1500" rows="5" placeholder="اكتب أي نص هنا… سيُعرض كما هو عند مسح الرمز."></textarea>
+            <p class="hint">كلما زاد النص زادت كثافة الرمز — النصوص القصيرة أسهل للمسح.</p>
+          </div>
+        </div>
+
+        <!-- واي فاي -->
+        <div class="type-form" id="form-wifi" hidden>
+          <div class="form-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2.5 9a15 15 0 0 1 19 0"/><path d="M5.5 12.5a10.5 10.5 0 0 1 13 0"/><path d="M8.5 16a6 6 0 0 1 7 0"/><circle cx="12" cy="19.3" r="1.2" fill="currentColor" stroke="none"/></svg>مشاركة شبكة Wi-Fi — اتصال بلمسة واحدة</div>
+          <div class="grid-2">
+            <div class="field">
+              <label for="wifiSSID">اسم الشبكة (SSID)</label>
+              <input class="inp" id="wifiSSID" dir="auto" maxlength="32" placeholder="My-Network" autocomplete="off">
+            </div>
+            <div class="field">
+              <label for="wifiEnc">نوع التشفير</label>
+              <select class="inp" id="wifiEnc">
+                <option value="WPA">WPA / WPA2 / WPA3</option>
+                <option value="WEP">WEP</option>
+                <option value="nopass">بدون كلمة مرور</option>
+              </select>
+            </div>
+          </div>
+          <div class="field" id="wifiPassField">
+            <label for="wifiPass">كلمة المرور</label>
+            <div class="inp-wrap">
+              <input class="inp" id="wifiPass" type="password" dir="ltr" maxlength="63" placeholder="••••••••" autocomplete="off">
+              <button class="icon-btn" id="passToggle" aria-label="إظهار كلمة المرور" aria-pressed="false">
+                <svg id="icEye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                <svg id="icEyeOff" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" hidden><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><path d="M1 1l22 22"/></svg>
+              </button>
+            </div>
+            <p class="field-err" id="wifiErr" hidden></p>
+          </div>
+          <label class="switch"><input type="checkbox" id="wifiHidden"><span class="track"><span class="knob"></span></span>شبكة مخفية (Hidden SSID)</label>
+          <p class="hint" style="margin-top:10px">عند المسح يتصل الهاتف بالشبكة تلقائياً (أندرويد وiOS الحديثة).</p>
+        </div>
+
+        <div class="payload-bar" id="payloadBar" hidden>
+          <span class="p-lbl">المُرمَّز:</span>
+          <code id="payloadText" dir="ltr"></code>
+          <button class="icon-btn" id="btnCopyPayload" aria-label="نسخ النص المُرمَّز" title="نسخ النص المُرمَّز">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- بطاقة المعاينة -->
+      <div class="preview-col">
+        <div class="card reveal" style="--d:2">
+          <div class="card-head">
+            <div class="card-title">
+              <span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2M17 3h2a2 2 0 0 1 2 2v2M21 17v2a2 2 0 0 1-2 2h-2M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></svg></span>
+              <div><h3>المعاينة الحية</h3><small>ما تراه هنا هو ما ستحمّله</small></div>
+            </div>
+            <span class="session-chip" id="sessionChip"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5l2.1 5.6 5.6 2.1-5.6 2.1L12 17.9l-2.1-5.6-5.6-2.1 5.6-2.1z"/></svg><span id="sessionTxt">٠ رموز هذه الجلسة</span></span>
+          </div>
+          <div class="scanframe" id="previewFrame">
+            <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
+            <canvas id="qrCanvas" width="704" height="704" role="img" aria-label="معاينة رمز الاستجابة السريعة"></canvas>
+            <div class="sweep" aria-hidden="true"></div>
+            <div class="pv-overlay" id="previewEmpty" hidden>
+              <svg class="big" id="emptyGhost" viewBox="0 0 32 32" fill="currentColor"><rect x="2" y="2" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2.4"/><rect x="20" y="2" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2.4"/><rect x="2" y="20" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2.4"/><rect x="20" y="20" width="4" height="4"/><rect x="26" y="26" width="4" height="4"/><rect x="20" y="27" width="3" height="3"/><rect x="14.5" y="14.5" width="3" height="3"/></svg>
+              <svg class="big" id="emptyAlert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" hidden><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+              <p class="msg" id="emptyMsg">أدخل بياناتك ليظهر الرمز هنا</p>
+              <p class="sub">المعاينة تتحدّث لحظياً أثناء الكتابة</p>
+            </div>
+            <div class="pv-overlay" id="previewLoad">
+              <div class="spinner" aria-hidden="true"></div>
+              <p class="msg">جارٍ تجهيز محرّك التوليد…</p>
+            </div>
+            <div class="pv-overlay error" id="libError" hidden>
+              <svg class="big" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+              <p class="msg">تعذّر تحميل محرّك التوليد — تحقّق من اتصالك بالإنترنت</p>
+              <button class="btn btn-soft btn-sm" id="btnRetryLib">إعادة المحاولة</button>
+            </div>
+          </div>
+          <div class="chips" id="qrChips" aria-live="polite"></div>
+          <p class="qr-meta" id="qrMeta">بانتظار البيانات…</p>
+          <div class="export-block">
+            <span class="lbl">تصدير عالي الدقة</span>
+            <div class="export-row">
+              <select class="inp" id="resSelect" aria-label="دقة التصدير">
+                <option value="512">512 px</option>
+                <option value="1024" selected>1024 px</option>
+                <option value="2048">2048 px</option>
+              </select>
+              <button class="btn btn-primary" id="btnPNG" disabled>
+                <svg class="b-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg>
+                تحميل PNG
+              </button>
+            </div>
+            <div class="export-row3">
+              <button class="btn btn-soft" id="btnCopyImg" disabled>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>نسخ الصورة
+              </button>
+              <button class="btn btn-soft" id="btnSVG" disabled>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 18l6-6-6-6M8 6l-6 6 6 6"/></svg>SVG
+              </button>
+              <button class="btn btn-soft" id="btnSave" disabled>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg>حفظ بالسجل
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- بطاقة التخصيص -->
+      <div class="card card-style reveal" id="cardStyle" style="--d:3">
+        <div class="card-head">
+          <div class="card-title">
+            <span class="tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"/><path d="M1 14h6M9 8h6M17 16h6"/></svg></span>
+            <div><h3>تخصيص المظهر</h3><small>كل تغيير يُطبَّق لحظياً</small></div>
+          </div>
+          <div class="head-actions">
+            <button class="icon-btn" id="btnRandom" aria-label="نمط عشوائي" title="خلط الأنماط 🎲">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.2" cy="8.2" r="1.4" fill="currentColor" stroke="none"/><circle cx="15.8" cy="8.2" r="1.4" fill="currentColor" stroke="none"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="8.2" cy="15.8" r="1.4" fill="currentColor" stroke="none"/><circle cx="15.8" cy="15.8" r="1.4" fill="currentColor" stroke="none"/></svg>
+            </button>
+            <button class="icon-btn" id="btnReset" aria-label="إعادة تعيين المظهر" title="إعادة تعيين المظهر">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="sg">
+          <div class="sg-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+            لون الرمز
+            <label class="switch"><input type="checkbox" id="gradToggle"><span class="track"><span class="knob"></span></span>تدرّج لوني</label>
+          </div>
+          <div class="color-row">
+            <div class="swatches" id="fgSwatches"></div>
+            <input type="color" id="fgColor" value="#186A5B" aria-label="لون الرمز">
+            <input class="inp hex-inp" id="fgHex" dir="ltr" maxlength="7" value="#186A5B" aria-label="قيمة لون الرمز HEX" spellcheck="false">
+          </div>
+          <div class="sub-open" id="gradExtra" aria-hidden="true">
+            <div><div class="grad-inner">
+              <input type="color" id="fg2Color" value="#0E7490" aria-label="اللون الثاني للتدرّج">
+              <div class="range-row">
+                <input type="range" id="angleRange" min="0" max="360" step="5" value="135" aria-label="زاوية التدرّج">
+                <output id="angleVal">135°</output>
+              </div>
+            </div></div>
+          </div>
+        </div>
+
+        <div class="sg">
+          <div class="sg-title">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M3 12h18M12 3v18"/></svg>
+            لون الخلفية
+            <label class="switch"><input type="checkbox" id="transparentToggle"><span class="track"><span class="knob"></span></span>شفافة</label>
+          </div>
+          <div class="color-row" id="bgRow">
+            <div class="swatches" id="bgSwatches"></div>
+            <input type="color" id="bgColor" value="#FFFFFF" aria-label="لون الخلفية">
+            <input class="inp hex-inp" id="bgHex" dir="ltr" maxlength="7" value="#FFFFFF" aria-label="قيمة لون الخلفية HEX" spellcheck="false">
+          </div>
+        </div>
+
+        <div class="sg">
+          <div class="tiles-wrap">
+            <div>
+              <div class="sg-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="6" height="6" rx="1"/><rect x="14" y="4" width="6" height="6" rx="3"/><circle cx="7" cy="17" r="3"/><circle cx="17" cy="17" r="3"/></svg>نمط النقاط</div>
+              <div class="tiles" id="dotsTiles" role="group" aria-label="نمط النقاط">
+                <button class="tile-btn" data-dots="square" aria-pressed="false"><svg viewBox="0 0 32 32" fill="currentColor"><rect x="3" y="3" width="7" height="7"/><rect x="13" y="3" width="7" height="7"/><rect x="23" y="3" width="7" height="7"/><rect x="3" y="13" width="7" height="7"/><rect x="13" y="13" width="7" height="7"/><rect x="23" y="13" width="7" height="7"/><rect x="3" y="23" width="7" height="7"/><rect x="13" y="23" width="7" height="7"/><rect x="23" y="23" width="7" height="7"/></svg><span>مربعات</span></button>
+                <button class="tile-btn" data-dots="rounded" aria-pressed="true"><svg viewBox="0 0 32 32" fill="currentColor"><rect x="3" y="3" width="7" height="7" rx="2.2"/><rect x="13" y="3" width="7" height="7" rx="2.2"/><rect x="23" y="3" width="7" height="7" rx="2.2"/><rect x="3" y="13" width="7" height="7" rx="2.2"/><rect x="13" y="13" width="7" height="7" rx="2.2"/><rect x="23" y="13" width="7" height="7" rx="2.2"/><rect x="3" y="23" width="7" height="7" rx="2.2"/><rect x="13" y="23" width="7" height="7" rx="2.2"/><rect x="23" y="23" width="7" height="7" rx="2.2"/></svg><span>ناعم</span></button>
+                <button class="tile-btn" data-dots="dots" aria-pressed="false"><svg viewBox="0 0 32 32" fill="currentColor"><circle cx="6.5" cy="6.5" r="3.4"/><circle cx="16.5" cy="6.5" r="3.4"/><circle cx="26.5" cy="6.5" r="3.4"/><circle cx="6.5" cy="16.5" r="3.4"/><circle cx="16.5" cy="16.5" r="3.4"/><circle cx="26.5" cy="16.5" r="3.4"/><circle cx="6.5" cy="26.5" r="3.4"/><circle cx="16.5" cy="26.5" r="3.4"/><circle cx="26.5" cy="26.5" r="3.4"/></svg><span>نقاط</span></button>
+              </div>
+            </div>
+            <div>
+              <div class="sg-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="4"/><rect x="8.5" y="8.5" width="7" height="7" rx="1.5" fill="currentColor" stroke="none"/></svg>نمط العيون</div>
+              <div class="tiles" id="eyesTiles" role="group" aria-label="نمط العيون">
+                <button class="tile-btn" data-eyes="square" aria-pressed="false"><svg viewBox="0 0 32 32"><rect x="4" y="4" width="24" height="24" fill="none" stroke="currentColor" stroke-width="5"/><rect x="12" y="12" width="8" height="8" fill="currentColor"/></svg><span>مربعة</span></button>
+                <button class="tile-btn" data-eyes="rounded" aria-pressed="true"><svg viewBox="0 0 32 32"><rect x="4" y="4" width="24" height="24" rx="7" fill="none" stroke="currentColor" stroke-width="5"/><rect x="12" y="12" width="8" height="8" rx="2.5" fill="currentColor"/></svg><span>ناعمة</span></button>
+                <button class="tile-btn" data-eyes="circle" aria-pressed="false"><svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="none" stroke="currentColor" stroke-width="5"/><circle cx="16" cy="16" r="4.5" fill="currentColor"/></svg><span>دائرية</span></button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="sg">
+          <div class="sg-title"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="8.5" cy="8.5" r="1.8"/><path d="M21 15l-5-5L5 21"/></svg>الشعار في المنتصف</div>
+          <div class="dropzone" id="logoZone" role="button" tabindex="0" aria-label="رفع صورة الشعار">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M17 8l-5-5-5 5M12 3v12"/></svg>
+            <b>اسحب شعارك هنا أو انقر للرفع</b>
+            <small>PNG · JPG · WEBP — حتى 4MB</small>
+          </div>
+          <div id="logoPreviewWrap" hidden>
+            <div class="logo-row">
+              <img class="logo-thumb" id="logoThumb" alt="معاينة الشعار">
+              <span class="l-name" id="logoName">شعار</span>
+              <button class="btn btn-danger-soft btn-sm" id="btnLogoRemove">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>إزالة
+              </button>
+            </div>
+            <div class="logo-controls">
+              <div>
+                <span class="lbl">حجم الشعار</span>
+                <div class="range-row"><input type="range" id="logoSizeRange" min="16" max="32" step="1" value="24" aria-label="حجم الشعار"><output id="logoSizeVal">24٪</output></div>
+              </div>
+              <label class="switch"><input type="checkbox" id="logoPadToggle" checked><span class="track"><span class="knob"></span></span>حواف آمنة حول الشعار (مستحسن)</label>
+            </div>
+          </div>
+          <input type="file" id="logoInput" accept="image/png,image/jpeg,image/webp,image/gif" hidden>
+        </div>
+
+        <div class="sg">
+          <div class="grid-2">
+            <div>
+              <span class="lbl">الهامش الآمن (Quiet Zone)</span>
+              <div class="range-row"><input type="range" id="marginRange" min="0" max="8" step="1" value="4" aria-label="الهامش الآمن"><output id="marginVal">4 وحدات</output></div>
+            </div>
+            <div>
+              <label class="lbl" for="eccSelect">مستوى تصحيح الخطأ</label>
+              <select class="inp" id="eccSelect">
+                <option value="L">منخفض — 7٪</option>
+                <option value="M">متوسط — 15٪</option>
+                <option value="Q" selected>جيّد — 25٪</option>
+                <option value="H">عالٍ — 30٪</option>
+              </select>
+            </div>
+          </div>
+          <p class="note" id="eccNote" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M12 11v5"/></svg>
+            فعّلنا المستوى الأعلى H (30٪) تلقائياً لحماية الرمز عند إضافة الشعار.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TEMPLATES ===== -->
+<section class="section section-tint" id="templates">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">قوالب جاهزة</span>
+      <h2>ابدأ من قالب وعدّله كما تشاء</h2>
+      <p class="lead">أمثلة واقعية بضغطة واحدة — تُعبّئ البيانات والمظهر معاً، ثم عدّل كل شيء بحرية.</p>
+    </div>
+    <div class="tpl-grid" id="templatesGrid">
+      <article class="tpl t-url reveal" style="--d:0">
+        <div class="tpl-top"><span class="tpl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></span><h3>موقع Nasr Digital</h3></div>
+        <p>شارك موقعك على البطاقات والمنشورات — رابط مباشر بتدرّج زمردي أنيق.</p>
+        <button class="btn" data-template="site">استخدام القالب</button>
+      </article>
+      <article class="tpl t-whatsapp reveal" style="--d:1">
+        <div class="tpl-top"><span class="tpl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-2.9-.4-4.1-1L3 20l1.1-5.2A8.5 8.5 0 1 1 21 11.5z"/></svg></span><h3>واتساب الدعم</h3></div>
+        <p>عملاؤك يراسلونك بمسحة واحدة — الرقم والرسالة جاهزان دون حفظ جهة اتصال.</p>
+        <button class="btn" data-template="support">استخدام القالب</button>
+      </article>
+      <article class="tpl t-wifi reveal" style="--d:2">
+        <div class="tpl-top"><span class="tpl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2.5 9a15 15 0 0 1 19 0"/><path d="M5.5 12.5a10.5 10.5 0 0 1 13 0"/><path d="M8.5 16a6 6 0 0 1 7 0"/><circle cx="12" cy="19.3" r="1.2" fill="currentColor" stroke="none"/></svg></span><h3>واي فاي الضيوف</h3></div>
+        <p>اطبعه واستقبل ضيوفك باتصال فوري بالشبكة — بدون إملاء كلمات المرور.</p>
+        <button class="btn" data-template="guest">استخدام القالب</button>
+      </article>
+      <article class="tpl t-text reveal" style="--d:3">
+        <div class="tpl-top"><span class="tpl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7V4h16v3M9 20h6M12 4v16"/></svg></span><h3>نص ترحيبي</h3></div>
+        <p>رسالة تعريفية تظهر فور المسح — مثالية للفعاليات والتغليف وأرفف المتاجر.</p>
+        <button class="btn" data-template="hello">استخدام القالب</button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HISTORY ===== -->
+<section class="section" id="history">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">سجلّك المحلي</span>
+      <h2>رموزك المحفوظة <span class="h-count" id="historyCount">٠</span></h2>
+      <p class="lead">تُحفظ على جهازك فقط (آخر ٢٤ رمزاً) — استعدها للتحرير، حمّلها مجدداً، أو احذفها في أي وقت.</p>
+    </div>
+    <div class="h-toolbar reveal">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.35-4.35"/></svg>
+        <input class="inp" id="historySearch" type="search" placeholder="ابحث في رموزك…" aria-label="البحث في السجل">
+      </div>
+      <div class="h-chips" id="historyChips" role="group" aria-label="تصفية حسب النوع">
+        <button class="h-chip on" data-filter="all">الكل <small>0</small></button>
+        <button class="h-chip" data-filter="url">روابط <small>0</small></button>
+        <button class="h-chip" data-filter="whatsapp">واتساب <small>0</small></button>
+        <button class="h-chip" data-filter="text">نصوص <small>0</small></button>
+        <button class="h-chip" data-filter="wifi">واي فاي <small>0</small></button>
+      </div>
+      <select class="inp" id="historySort" aria-label="ترتيب السجل">
+        <option value="new">الأحدث أولاً</option>
+        <option value="old">الأقدم أولاً</option>
+      </select>
+      <button class="btn btn-danger-soft btn-sm" id="btnClearHistory" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>مسح الكل
+      </button>
+    </div>
+    <div class="h-grid" id="historyGrid"></div>
+    <div class="h-empty" id="historyEmpty" hidden>
+      <svg viewBox="0 0 32 32" fill="currentColor"><rect x="2" y="2" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2.2"/><rect x="20" y="2" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2.2"/><rect x="2" y="20" width="10" height="10" rx="2" fill="none" stroke="currentColor" stroke-width="2.2"/><rect x="20" y="20" width="4" height="4"/><rect x="26" y="26" width="4" height="4"/><rect x="14.5" y="14.5" width="3" height="3"/></svg>
+      <b id="hEmptyTitle">لا توجد رموز محفوظة بعد</b>
+      <p id="hEmptyDesc">ولّد رمزك الأول ثم اضغط «حفظ بالسجل» ليظهر هنا.</p>
+      <a class="btn btn-primary btn-sm" href="#generator" id="hEmptyCta">ابدأ التوليد</a>
+      <button class="btn btn-soft btn-sm" id="btnClearFilters" hidden>مسح عوامل التصفية</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section class="section" id="features">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">لماذا صانع QR؟</span>
+      <h2>أداة صُممت لتُستخدم بثقة</h2>
+      <p class="lead">كل ما تحتاجه لإنتاج رمز احترافي قابل للمسح — بدون حسابات، بدون اشتراكات، بدون مفاجآت.</p>
+    </div>
+    <div class="feat-grid">
+      <article class="feat t-url reveal" style="--d:0">
+        <span class="tpl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></span>
+        <h3>خصوصية مطلقة</h3><p>التوليد والمعالجة يتمان داخل متصفحك عبر Canvas — لا تُرفع بياناتك أو شعارك إلى أي خادم.</p>
+      </article>
+      <article class="feat t-whatsapp reveal" style="--d:1">
+        <span class="tpl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></span>
+        <h3>معاينة فورية</h3><p>كل حرف تكتبه وكل لون تختاره ينعكس على الرمز في لحظتها — ما تراه هو ما ستحمّله تماماً.</p>
+      </article>
+      <article class="feat t-text reveal" style="--d:2">
+        <span class="tpl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg></span>
+        <h3>هويتك الكاملة</h3><p>ألوان وتدرّجات، ثلاثة أنماط للنقاط والعيون، وشعارك في المنتصف مع حماية ذكية للتباين.</p>
+      </article>
+      <article class="feat t-wifi reveal" style="--d:3">
+        <span class="tpl-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M21 8V5a2 2 0 0 0-2-2h-3M3 16v3a2 2 0 0 0 2 2h3M16 21h3a2 2 0 0 0 2-2v-3"/></svg></span>
+        <h3>جودة طباعة</h3><p>صدّر PNG حتى 2048×2048 بكسل أو SVG متجهي لا نهائي الدقة — جاهز للمطبوعات واللوحات.</p>
+      </article>
+    </div>
+    <div class="privacy reveal">
+      <svg class="p-ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
+      <div>
+        <h3>بياناتك لا تغادر جهازك — أبداً</h3>
+        <p>لا خوادم، لا تتبّع، لا حسابات. حتى سجلّك المحفوظ يُخزَّن محلياً في متصفحك وحدك، ويمكنك مسحَه بضغطة.</p>
+      </div>
+      <div class="p-stats">
+        <div><b>٠</b><span>خوادم</span></div>
+        <div><b>١٠٠٪</b><span>معالجة محلية</span></div>
+        <div><b>∞</b><span>رموز بلا حدود</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section class="section" id="faq" style="padding-top:20px">
+  <div class="container">
+    <div class="sec-head reveal" style="text-align:center">
+      <span class="eyebrow">الأسئلة الشائعة</span>
+      <h2>كل ما تريد معرفته</h2>
+    </div>
+    <div class="faq-list" id="faqList">
+      <div class="faq-item reveal" style="--d:0">
+        <button class="faq-q" aria-expanded="false">هل استخدام صانع QR مجاني فعلاً؟<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><div><p>نعم، مجاني بالكامل: بدون تسجيل، بدون علامات مائية، وبدون حد لعدد الرموز أو دقة التصدير. جميع أنواع البيانات والتخصيص متاحة للجميع منذ اللحظة الأولى.</p></div></div>
+      </div>
+      <div class="faq-item reveal" style="--d:1">
+        <button class="faq-q" aria-expanded="false">هل تنتهي صلاحية الرموز المولّدة؟<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><div><p>لا. الرموز هنا ثابتة (Static): البيانات مخزّنة داخل الرمز نفسه ولا تمر عبر أي وسيط، لذا تعمل مدى الحياة. الرابط وحده يحتاج أن يبقى وجهته فعّالة، أما رسالة واتساب والنص والواي فاي فتعمل دائماً.</p></div></div>
+      </div>
+      <div class="faq-item reveal" style="--d:2">
+        <button class="faq-q" aria-expanded="false">ما مستوى تصحيح الخطأ المناسب؟<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><div><p>يحدّد نسبة الرمز التي يمكن تلفها مع بقاء المسح ناجحاً (من 7٪ إلى 30٪). المستوى «جيّد Q» مناسب لمعظم الاستخدامات، وعند إضافة شعار نفعّل المستوى الأعلى H تلقائياً لأن الشعار يغطي جزءاً من الوحدات. المستوى الأعلى يزيد كثافة الرمز قليلاً.</p></div></div>
+      </div>
+      <div class="faq-item reveal" style="--d:3">
+        <button class="faq-q" aria-expanded="false">هل تُرفع بياناتي أو شعاري إلى خادم؟<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><div><p>إطلاقاً. التوليد والرسم والتصدير كلها تتم داخل متصفحك، ويمكنك قطع الإنترنت بعد تحميل الصفحة ومواصلة العمل. السجل المحفوظ يستخدم التخزين المحلي (localStorage) على جهازك فقط، ولا يغادره بأي شكل.</p></div></div>
+      </div>
+      <div class="faq-item reveal" style="--d:4">
+        <button class="faq-q" aria-expanded="false">لماذا قد يفشل مسح الرمز أحياناً؟<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>
+        <div class="faq-a"><div><p>الأسباب الشائعة: تباين ضعيف بين لون الرمز والخلفية، هامش آمن صغير، شعار كبير جداً، أو نص طويل يجعل الرمز كثيفاً. نبّهك الأداة تلقائياً عند هذه الحالات، وتذكّر القاعدة الذهبية: لون داكن على خلفية فاتحة، وهامش ٤ وحدات، وشعار لا يتجاوز ٢٨٪.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="container foot-grid">
+    <div class="foot-brand">
+      <a class="brand" href="#top">
+        <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="8" fill="#1F8A70"/><rect x="5" y="5" width="8" height="8" rx="2" fill="none" stroke="#fff" stroke-width="2.4"/><rect x="19" y="5" width="8" height="8" rx="2" fill="none" stroke="#fff" stroke-width="2.4"/><rect x="5" y="19" width="8" height="8" rx="2" fill="none" stroke="#fff" stroke-width="2.4"/><rect x="19" y="19" width="3.4" height="3.4" fill="#fff"/><rect x="24" y="24" width="3.4" height="3.4" fill="#fff"/><rect x="19" y="24.5" width="2.4" height="2.4" fill="#BEF264"/></svg>
+        <span class="brand-txt"><b>صانع QR</b><i>Nasr Digital</i></span>
+      </a>
+      <p>أداة مجانية من Nasr Digital لتوليد رموز استجابة سريعة عالية الجودة — تعمل بالكامل داخل متصفحك، بلا خوادم وبلا تتبّع.</p>
+      <button class="btn-outline-light" id="btnShare">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.59 13.51l6.83 3.98M15.41 6.51l-6.82 3.98"/></svg>
+        شارك التطبيق مع أصدقائك
+      </button>
+    </div>
+    <div>
+      <h4>روابط سريعة</h4>
+      <div class="foot-links">
+        <a href="#generator">مولّد الرموز</a>
+        <a href="#templates">القوالب الجاهزة</a>
+        <a href="#history">رموزي المحفوظة</a>
+        <a href="#features">المميزات</a>
+        <a href="#faq">الأسئلة الشائعة</a>
+      </div>
+    </div>
+    <div>
+      <h4>جرّب نوعاً الآن</h4>
+      <div class="foot-types" id="footTypes">
+        <button data-gotype="url">🔗 رابط موقع</button>
+        <button data-gotype="whatsapp">💬 رسالة واتساب</button>
+        <button data-gotype="text">📝 نص حر</button>
+        <button data-gotype="wifi">📶 شبكة واي فاي</button>
+      </div>
+    </div>
+  </div>
+  <div class="container foot-bottom">
+    <span>© <span id="yearNow">2026</span> Nasr Digital — جميع الحقوق محفوظة.</span>
+    <span>صُنع بإتقان ليعمل في متصفحك · <a href="#faq">خصوصيتك أولاً</a></span>
+  </div>
+</footer>
+
+<button id="toTop" aria-label="العودة إلى الأعلى">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</button>
+
+<!-- شريط الجوال الحي -->
+<div id="mobileBar">
+  <canvas id="miniQr" width="96" height="96" aria-hidden="true"></canvas>
+  <div class="mb-txt"><b>معاينة حية</b><span>جاهز للمسح ✓</span></div>
+  <button class="btn btn-primary btn-sm" id="barDownload" disabled>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg>
+    تحميل PNG
+  </button>
+</div>
+
+<div id="toasts" aria-live="polite"></div>
+
+<script>
+(function(){
+'use strict';
+/* ================= HELPERS ================= */
+const $ = s => document.querySelector(s);
+const $$ = s => Array.from(document.querySelectorAll(s));
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmtAr = n => Number(n).toLocaleString('ar-EG');
+const clamp = (v,a,b)=>Math.min(b,Math.max(a,v));
+const uid = ()=> (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : 'id-'+Date.now()+'-'+Math.random().toString(36).slice(2,9);
+const hexOk = v => /^#[0-9a-fA-F]{6}$/.test(v);
+const normHex = v => { v=String(v).trim(); if(!v.startsWith('#')) v='#'+v; return hexOk(v)? v.toUpperCase() : null; };
+const enc = new TextEncoder();
+function lum(hex){
+  const n=parseInt(hex.slice(1),16), c=[(n>>16)&255,(n>>8)&255,n&255].map(v=>{v/=255;return v<=.03928? v/12.92 : Math.pow((v+.055)/1.055,2.4);});
+  return .2126*c[0]+.7152*c[1]+.0722*c[2];
+}
+const ratio=(a,b)=>{const l1=lum(a),l2=lum(b);return (Math.max(l1,l2)+.05)/(Math.min(l1,l2)+.05);};
+function relTime(ts){
+  const d=Date.now()-ts;
+  try{
+    const rtf=new Intl.RelativeTimeFormat('ar',{numeric:'auto'});
+    if(d<60e3) return 'الآن';
+    if(d<3600e3) return rtf.format(-Math.round(d/60e3),'minute');
+    if(d<86400e3) return rtf.format(-Math.round(d/3600e3),'hour');
+    if(d<30*86400e3) return rtf.format(-Math.round(d/86400e3),'day');
+  }catch(e){}
+  return new Intl.DateTimeFormat('ar',{day:'numeric',month:'short'}).format(new Date(ts));
+}
+function saveBlob(blob,name){
+  const url=URL.createObjectURL(blob), a=document.createElement('a');
+  a.href=url; a.download=name; document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),4000);
+}
+async function copyText(t){
+  try{ await navigator.clipboard.writeText(t); return true; }
+  catch(e){
+    try{
+      const ta=document.createElement('textarea'); ta.value=t; ta.style.cssText='position:fixed;opacity:0';
+      document.body.appendChild(ta); ta.select(); const ok=document.execCommand('copy'); ta.remove(); return ok;
+    }catch(e2){ return false; }
+  }
+}
+/* ================= ICONS (dynamic) ================= */
+const IC={
+  ok:'<path d="M20 6L9 17l-5-5"/>',
+  warn:'<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/>',
+  info:'<circle cx="12" cy="12" r="9"/><path d="M12 8h.01M12 11v5"/>',
+  x:'<path d="M18 6L6 18M6 6l12 12"/>',
+  link:'<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>',
+  whatsapp:'<path d="M21 11.5a8.5 8.5 0 0 1-8.5 8.5c-1.5 0-2.9-.4-4.1-1L3 20l1.1-5.2A8.5 8.5 0 1 1 21 11.5z"/>',
+  text:'<path d="M4 7V4h16v3M9 20h6M12 4v16"/>',
+  wifi:'<path d="M2.5 9a15 15 0 0 1 19 0"/><path d="M5.5 12.5a10.5 10.5 0 0 1 13 0"/><path d="M8.5 16a6 6 0 0 1 7 0"/><circle cx="12" cy="19.3" r="1.2" fill="currentColor" stroke="none"/>',
+  restore:'<path d="M1 4v6h6"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/>',
+  download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/>',
+  trash:'<path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>',
+  spark:'<path d="M12 2.5l2.1 5.6 5.6 2.1-5.6 2.1L12 17.9l-2.1-5.6-5.6-2.1 5.6-2.1z" fill="currentColor" stroke="none"/>'
+};
+const icon=(n,cls)=>'<svg class="'+(cls||'')+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+IC[n]+'</svg>';
+/* ================= CONSTANTS ================= */
+const TYPES={
+  url:{label:'رابط',icon:'link',cls:'t-url'},
+  whatsapp:{label:'واتساب',icon:'whatsapp',cls:'t-whatsapp'},
+  text:{label:'نص',icon:'text',cls:'t-text'},
+  wifi:{label:'واي فاي',icon:'wifi',cls:'t-wifi'}
+};
+const ECC_PCT={L:'7',M:'15',Q:'25',H:'30'};
+const FG_PRESETS=['#186A5B','#0F3D33','#111827','#1D4ED8','#7C3AED','#B91C1C','#0E7490','#9A3412'];
+const BG_PRESETS=['#FFFFFF','#F2FAF7','#FEF9C3','#EFF6FF','#FDF2F8','#ECFCCB','#FFF7ED','#0F172A'];
+const CC=[['966','🇸🇦','السعودية'],['971','🇦🇪','الإمارات'],['20','🇪🇬','مصر'],['962','🇯🇴','الأردن'],['965','🇰🇼','الكويت'],['974','🇶🇦','قطر'],['973','🇧🇭','البحرين'],['968','🇴🇲','عُمان'],['964','🇮🇶','العراق'],['967','🇾🇪','اليمن'],['963','🇸🇾','سوريا'],['961','🇱🇧','لبنان'],['970','🇵🇸','فلسطين'],['218','🇱🇾','ليبيا'],['216','🇹🇳','تونس'],['213','🇩🇿','الجزائر'],['212','🇲🇦','المغرب'],['249','🇸🇩','السودان'],['90','🇹🇷','تركيا'],['1','🇺🇸','USA'],['44','🇬🇧','UK'],['33','🇫🇷','فرنسا'],['49','🇩🇪','ألمانيا'],['91','🇮🇳','الهند'],['92','🇵🇰','باكستان']];
+const TEMPLATES={
+  site:{type:'url',data:{url:'https://nasr.digital'},style:{fg:'#186A5B',grad:true,fg2:'#0E7490',angle:135,dots:'rounded',eyes:'rounded'}},
+  support:{type:'whatsapp',data:{wa:{cc:'966',phone:'551234567',msg:'مرحباً! أود الاستفسار عن خدمات Nasr Digital.'}},style:{fg:'#128C7E',grad:false,dots:'dots',eyes:'circle'}},
+  guest:{type:'wifi',data:{wifi:{ssid:'Nasr-Guest',pass:'Welcome@2026',enc:'WPA',hidden:false}},style:{fg:'#0E7490',grad:true,fg2:'#2563EB',angle:120,dots:'square',eyes:'square'}},
+  hello:{type:'text',data:{text:'أهلاً بك في Nasr Digital ✨\nنصنع حلولاً رقمية تنمّي أعمالك.\nراسلنا: hello@nasr.digital'},style:{fg:'#7C3AED',grad:false,dots:'rounded',eyes:'circle'}}
+};
+const STORE_KEY='nd_qr_history_v1', SEED_KEY='nd_qr_seeded_v1';
+/* ================= STATE ================= */
+const DEFAULT_STYLE={fg:'#186A5B',bg:'#FFFFFF',transparent:false,grad:false,fg2:'#0E7490',angle:135,dots:'rounded',eyes:'rounded',margin:4,ecc:'Q'};
+const state={
+  type:'url',
+  data:{url:'https://nasr.digital',wa:{cc:'966',phone:'',msg:'مرحباً! 👋'},text:'',wifi:{ssid:'',pass:'',enc:'WPA',hidden:false}},
+  style:{...DEFAULT_STYLE},
+  logo:{img:null,dataUrl:null,name:'',size:.24,pad:true},
+  exportSize:1024
+};
+const historyState={q:'',filter:'all',sort:'new'};
+let history=[];
+let libReady=false, libMode=null, libLoading=false;
+let lastGood=null, lastCounted='', sessionCount=0, renderTimer=null, saveBusy=false;
+const qrCache=new Map();
+const HAS_P2D = typeof Path2D !== 'undefined';
+/* ================= LIB LOADER ================= */
+const LIB_URLS=[
+  'https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js',
+  'https://unpkg.com/qrcode@1.5.3/build/qrcode.min.js',
+  'https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.js',
+  'https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js'
+];
+function detectLib(){
+  if(window.QRCode && typeof window.QRCode.create==='function'){libMode='node';return true;}
+  if(typeof window.qrcode==='function'){libMode='kazu';return true;}
+  return false;
+}
+function loadLib(i){
+  i=i||0;
+  if(detectLib()) return Promise.resolve();
+  if(i>=LIB_URLS.length) return Promise.reject(new Error('lib'));
+  return new Promise((res,rej)=>{
+    const s=document.createElement('script'); s.src=LIB_URLS[i]; s.async=true;
+    s.onload=()=>{ detectLib()? res() : loadLib(i+1).then(res,rej); };
+    s.onerror=()=>{ s.remove(); loadLib(i+1).then(res,rej); };
+    document.head.appendChild(s);
+  });
+}
+function getQR(payload,ecc){
+  const key=ecc+'|'+payload;
+  if(qrCache.has(key)) return qrCache.get(key);
+  let qr;
+  if(libMode==='node'){
+    qr=window.QRCode.create(payload,{errorCorrectionLevel:ecc});
+  }else{
+    const q=window.qrcode(0,ecc); q.addData(payload,'Byte'); q.make();
+    const n=q.getModuleCount(), data=new Uint8Array(n*n);
+    for(let r=0;r<n;r++)for(let c=0;c<n;c++)data[r*n+c]=q.isDark(r,c)?1:0;
+    qr={modules:{size:n,data},version:(n-17)/4};
+  }
+  if(qrCache.size>40) qrCache.clear();
+  qrCache.set(key,qr);
+  return qr;
+}
+/* ================= PAYLOAD ================= */
+const wifiEsc=s=>String(s).replace(/([\\;,:"])/g,'\\$1');
+function buildPayload(){
+  const t=state.type, d=state.data;
+  if(t==='url'){
+    let v=(d.url||'').trim();
+    if(!v) return {ok:false,silent:true};
+    if(/\s/.test(v)) return {ok:false,err:'الرابط يجب ألا يحتوي على مسافات',field:'url'};
+    if(!/^[a-zA-Z][a-zA-Z0-9+.-]*:/.test(v)) v='https://'+v;
+    return {ok:true,payload:v};
+  }
+  if(t==='whatsapp'){
+    const raw=(d.wa.phone||'').trim();
+    if(!raw) return {ok:false,silent:true};
+    let digits=raw.replace(/\D/g,'').replace(/^0+/,'');
+    if(digits.length<7) return {ok:false,err:'أدخل رقم هاتف صحيح (٧ أرقام على الأقل)',field:'wa'};
+    const msg=(d.wa.msg||'').trim();
+    return {ok:true,payload:'https://wa.me/'+d.wa.cc+digits+(msg?'?text='+encodeURIComponent(msg):'')};
+  }
+  if(t==='text'){
+    const v=d.text||'';
+    if(!v.trim()) return {ok:false,silent:true};
+    return {ok:true,payload:v};
+  }
+  // wifi
+  const w=d.wifi, ssid=(w.ssid||'').trim();
+  if(!ssid) return {ok:false,silent:true};
+  if(w.enc!=='nopass' && !w.pass) return {ok:false,err:'أدخل كلمة مرور الشبكة',field:'wifi'};
+  const parts=['T:'+w.enc,'S:'+wifiEsc(ssid)];
+  if(w.enc!=='nopass') parts.push('P:'+wifiEsc(w.pass));
+  if(w.hidden) parts.push('H:true');
+  return {ok:true,payload:'WIFI:'+parts.join(';')+';;'};
+}
+/* ================= PATH / GEOMETRY ================= */
+const R2=v=>Math.round(v*100)/100;
+const rectP=(x,y,w,h)=>'M'+R2(x)+' '+R2(y)+'h'+R2(w)+'v'+R2(h)+'h'+R2(-w)+'z';
+function rrectP(x,y,w,h,r){
+  r=Math.min(r,w/2,h/2);
+  return 'M'+R2(x+r)+' '+R2(y)+'h'+R2(w-2*r)+'a'+R2(r)+' '+R2(r)+' 0 0 1 '+R2(r)+' '+R2(r)+
+    'v'+R2(h-2*r)+'a'+R2(r)+' '+R2(r)+' 0 0 1 '+R2(-r)+' '+R2(r)+
+    'h'+R2(-(w-2*r))+'a'+R2(r)+' '+R2(r)+' 0 0 1 '+R2(-r)+' '+R2(-r)+
+    'v'+R2(-(h-2*r))+'a'+R2(r)+' '+R2(r)+' 0 0 1 '+R2(r)+' '+R2(-r)+'z';
+}
+const circP=(cx,cy,r)=>'M'+R2(cx-r)+' '+R2(cy)+'a'+R2(r)+' '+R2(r)+' 0 1 0 '+R2(2*r)+' 0a'+R2(r)+' '+R2(r)+' 0 1 0 '+R2(-2*r)+' 0z';
+function buildGeometry(qr,st,logoImg,px){
+  const n=qr.modules.size, m=st.margin, N=n+2*m, u=px/N, d=qr.modules.data;
+  const dots=[], eyes=[];
+  let box=null;
+  if(logoImg){
+    const w=px*st.logoSize, pad=st.logoPad? Math.max(u*.8,w*.10):0;
+    box={x:(px-w)/2,y:(px-w)/2,w:w,pad:pad,rx:Math.min(w*.16,px*.026)};
+  }
+  const inBox=(cx,cy)=>box && cx>box.x-box.pad && cx<box.x+box.w+box.pad && cy>box.y-box.pad && cy<box.y+box.w+box.pad;
+  const isFinder=(r,c)=>(r<7&&c<7)||(r<7&&c>=n-7)||(r>=n-7&&c<7);
+  for(let r=0;r<n;r++)for(let c=0;c<n;c++){
+    if(!d[r*n+c]||isFinder(r,c))continue;
+    const x=(c+m)*u, y=(r+m)*u;
+    if(inBox(x+u/2,y+u/2))continue;
+    if(st.dots==='dots') dots.push(circP(x+u/2,y+u/2,u*.47));
+    else if(st.dots==='rounded') dots.push(rrectP(x,y,u,u,u*.30));
+    else dots.push(rectP(x,y,u+.55,u+.55));
+  }
+  const eye=(r,c)=>{
+    const x=(c+m)*u, y=(r+m)*u, s=7*u, k=st.eyes;
+    eyes.push(k==='circle'?circP(x+s/2,y+s/2,s/2):k==='rounded'?rrectP(x,y,s,s,s*.30):rectP(x,y,s,s));
+    eyes.push(k==='circle'?circP(x+s/2,y+s/2,s/2-u):k==='rounded'?rrectP(x+u,y+u,5*u,5*u,5*u*.28):rectP(x+u,y+u,5*u,5*u));
+    eyes.push(k==='circle'?circP(x+s/2,y+s/2,1.5*u):k==='rounded'?rrectP(x+2*u,y+2*u,3*u,3*u,3*u*.32):rectP(x+2*u,y+2*u,3*u,3*u));
+  };
+  eye(0,0);eye(0,n-7);eye(n-7,0);
+  return {dots:dots.join(''),eyes:eyes.join(''),box:box,N:N,u:u};
+}
+function gradCoords(px,angle){
+  const a=angle*Math.PI/180, c=px/2, dx=Math.cos(a)*c, dy=Math.sin(a)*c;
+  return {x1:c-dx,y1:c-dy,x2:c+dx,y2:c+dy};
+}
+function paintCanvas(cv,qr,st,logoImg,px){
+  cv.width=cv.height=px;
+  const ctx=cv.getContext('2d');
+  ctx.clearRect(0,0,px,px);
+  if(!st.transparent){ctx.fillStyle=st.bg;ctx.fillRect(0,0,px,px);}
+  let fill=st.fg;
+  if(st.grad){
+    const g=gradCoords(px,st.angle), gr=ctx.createLinearGradient(g.x1,g.y1,g.x2,g.y2);
+    gr.addColorStop(0,st.fg); gr.addColorStop(1,st.fg2); fill=gr;
+  }
+  const geo=buildGeometry(qr,st,logoImg,px);
+  ctx.fillStyle=fill;
+  if(HAS_P2D){
+    ctx.fill(new Path2D(geo.dots));
+    ctx.fill(new Path2D(geo.eyes),'evenodd');
+  }else{
+    // متصفح قديم: رسم مربعات مباشرة
+    const n=qr.modules.size,m=st.margin,u=px/(n+2*m),d=qr.modules.data;
+    for(let r=0;r<n;r++)for(let c=0;c<n;c++)if(d[r*n+c])ctx.fillRect((c+m)*u,(r+m)*u,u+.5,u+.5);
+  }
+  if(geo.box&&logoImg){
+    const b=geo.box;
+    if(st.logoPad&&HAS_P2D){
+      ctx.fillStyle=st.transparent?'#FFFFFF':st.bg;
+      ctx.fill(new Path2D(rrectP(b.x-b.pad,b.y-b.pad,b.w+2*b.pad,b.w+2*b.pad,b.rx)));
+    }
+    const iw=logoImg.naturalWidth||1, ih=logoImg.naturalHeight||1, s=Math.min(b.w/iw,b.w/ih), dw=iw*s, dh=ih*s;
+    ctx.imageSmoothingEnabled=true; ctx.imageSmoothingQuality='high';
+    ctx.drawImage(logoImg,b.x+(b.w-dw)/2,b.y+(b.w-dh)/2,dw,dh);
+  }
+}
+function buildSVG(qr,st,logoDataUrl,logoImg,px){
+  const geo=buildGeometry(qr,st,logoImg,px);
+  let defs='',fill=st.fg;
+  if(st.grad){
+    const g=gradCoords(px,st.angle);
+    defs='<defs><linearGradient id="qg" gradientUnits="userSpaceOnUse" x1="'+R2(g.x1)+'" y1="'+R2(g.y1)+'" x2="'+R2(g.x2)+'" y2="'+R2(g.y2)+'"><stop offset="0" stop-color="'+st.fg+'"/><stop offset="1" stop-color="'+st.fg2+'"/></linearGradient></defs>';
+    fill='url(#qg)';
+  }
+  const bg=st.transparent?'':'<rect width="'+px+'" height="'+px+'" fill="'+st.bg+'"/>';
+  let logo='';
+  if(geo.box&&logoDataUrl&&logoImg){
+    const b=geo.box;
+    const pad=st.logoPad?'<rect x="'+R2(b.x-b.pad)+'" y="'+R2(b.y-b.pad)+'" width="'+R2(b.w+2*b.pad)+'" height="'+R2(b.w+2*b.pad)+'" rx="'+R2(b.rx)+'" fill="'+(st.transparent?'#FFFFFF':st.bg)+'"/>':'';
+    logo=pad+'<image x="'+R2(b.x)+'" y="'+R2(b.y)+'" width="'+R2(b.w)+'" height="'+R2(b.w)+'" preserveAspectRatio="xMidYMid meet" href="'+logoDataUrl+'" xlink:href="'+logoDataUrl+'"/>';
+  }
+  return '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="'+px+'" height="'+px+'" viewBox="0 0 '+px+' '+px+'">'+defs+bg+
+    '<path d="'+geo.dots+'" fill="'+fill+'"/><path d="'+geo.eyes+'" fill="'+fill+'" fill-rule="evenodd"/>'+logo+'</svg>';
+}
+/* ================= RENDER PIPELINE ================= */
+const effEcc=()=>state.logo.img?'H':state.style.ecc;
+function scheduleRender(){clearTimeout(renderTimer);renderTimer=setTimeout(renderNow,90);}
+function setFieldErr(field,msg){
+  const map={url:['urlInput','urlErr'],wa:['waPhone','waErr'],wifi:['wifiPass','wifiErr']};
+  Object.keys(map).forEach(k=>{
+    const [inp,err]=map[k], on=(k===field&&msg);
+    $('#'+inp).classList.toggle('err',!!on);
+    const e=$('#'+err); e.hidden=!on;
+    if(on) e.innerHTML=icon('warn')+'<span>'+esc(msg)+'</span>';
+  });
+}
+function showOverlay(which,msg,isErr){
+  $('#previewLoad').hidden = which!=='load';
+  $('#libError').hidden = which!=='lib';
+  const emp=$('#previewEmpty');
+  emp.hidden = which!=='empty';
+  if(which==='empty'){
+    emp.classList.toggle('error',!!isErr);
+    $('#emptyGhost').hidden=!!isErr; $('#emptyAlert').hidden=!isErr;
+    $('#emptyMsg').textContent=msg||'أدخل بياناتك ليظهر الرمز هنا';
+  }
+}
+function setExportsEnabled(on){
+  ['btnPNG','btnCopyImg','btnSVG','btnSave','barDownload'].forEach(id=>{$('#'+id).disabled=!on;});
+}
+function renderNow(){
+  const built=buildPayload();
+  setFieldErr(built.field,built.err);
+  const frame=$('#previewFrame'), canvas=$('#qrCanvas');
+  frame.classList.toggle('checker',state.style.transparent);
+  if(!libReady){showOverlay('load');setExportsEnabled(false);$('#payloadBar').hidden=true;$('#qrMeta').textContent='جارٍ تحميل المحرّك…';return;}
+  if(!built.ok){
+    showOverlay('empty',built.err||'أدخل بياناتك ليظهر الرمز هنا',!!built.err);
+    frame.classList.remove('valid');
+    setExportsEnabled(false);
+    $('#payloadBar').hidden=true;
+    $('#qrChips').innerHTML='';
+    $('#qrMeta').textContent='بانتظار بيانات صحيحة…';
+    document.body.classList.remove('bar-on');
+    lastGood=null;
+    return;
+  }
+  let qr;
+  try{ qr=getQR(built.payload,effEcc()); }
+  catch(e){
+    showOverlay('empty','البيانات أكبر من سعة الرمز — قلّل النص أو اختر مستوى تصحيح أقل',true);
+    frame.classList.remove('valid'); setExportsEnabled(false);
+    $('#payloadBar').hidden=true; $('#qrChips').innerHTML=''; $('#qrMeta').textContent='—';
+    document.body.classList.remove('bar-on'); lastGood=null; return;
+  }
+  showOverlay(null);
+  const prevPayload=lastGood?lastGood.payload:null;
+  paintCanvas(canvas,qr,state.style,state.logo.img,704);
+  if(prevPayload!==built.payload){canvas.classList.remove('qr-pop');void canvas.offsetWidth;canvas.classList.add('qr-pop');}
+  // mini mirror
+  const mini=$('#miniQr'); mini.width=mini.height=96;
+  mini.getContext('2d').drawImage(canvas,0,0,96,96);
+  frame.classList.add('valid');
+  setExportsEnabled(true);
+  $('#payloadBar').hidden=false;
+  $('#payloadText').textContent=built.payload;
+  document.body.classList.add('bar-on');
+  const n=qr.modules.size, bytes=enc.encode(built.payload).length;
+  $('#qrMeta').textContent='الإصدار '+qr.version+' · '+n+'×'+n+' وحدة · تصحيح '+ECC_PCT[effEcc()]+'٪ · '+bytes+' بايت';
+  renderChips(bytes);
+  if(built.payload!==lastCounted){
+    lastCounted=built.payload; sessionCount++;
+    $('#sessionTxt').textContent=fmtAr(sessionCount)+' '+(sessionCount===1?'رمز هذه الجلسة':'رموز هذه الجلسة');
+    const chip=$('#sessionChip'); chip.classList.remove('pop'); void chip.offsetWidth; chip.classList.add('pop');
+  }
+  lastGood={qr:qr,payload:built.payload,type:state.type};
+}
+function renderChips(bytes){
+  const wrap=$('#qrChips'); wrap.innerHTML='';
+  const add=(kind,html)=>{const s=document.createElement('span');s.className='chip '+kind;s.innerHTML=html;wrap.appendChild(s);};
+  const T=TYPES[state.type];
+  add('type '+T.cls,icon(T.icon)+T.label);
+  add('ok','<span class="dot"></span>جاهز للمسح');
+  const st=state.style, warns=[];
+  if(st.transparent){
+    warns.push(['info','خلفية شفافة — ضع الرمز على سطح فاتح']);
+  }else{
+    const worst=Math.min(ratio(st.fg,st.bg), st.grad?ratio(st.fg2,st.bg):99);
+    const inverted=lum(st.fg)>lum(st.bg);
+    if(worst<3||inverted)
+      warns.push(['warn',(worst<3?'تباين منخفض':'ألوان معكوسة')+' — قد يصعب المسح <button data-invert>عكس الألوان</button>']);
+  }
+  if(st.margin<2) warns.push(['warn','هامش صغير — يُنصح بـ ٤ وحدات']);
+  if(state.logo.img&&state.logo.size>.28) warns.push(['warn','الشعار كبير — قلّله إلى ٢٨٪ أو أقل']);
+  if(bytes>700) warns.push(['info','بيانات كثيفة — اختبر المسح قبل الطباعة']);
+  warns.slice(0,2).forEach(w=>add(w[0],icon(w[0]==='warn'?'warn':'info')+'<span>'+w[1]+'</span>'));
+}
+/* ================= EXPORTS & RECORDS ================= */
+function makeCanvas(px,qr,st,logoImg){const cv=document.createElement('canvas');paintCanvas(cv,qr,st||state.style,logoImg===undefined?state.logo.img:logoImg,px);return cv;}
+function downloadPNG(){
+  if(!lastGood)return;
+  const btn=$('#btnPNG'); btn.classList.add('loading'); btn.disabled=true;
+  const px=state.exportSize;
+  setTimeout(()=>{
+    try{
+      const cv=makeCanvas(px,lastGood.qr);
+      const name='QR-Nasr-'+lastGood.type+'-'+px+'px.png';
+      cv.toBlob(b=>{
+        if(b) saveBlob(b,name);
+        else{const a=document.createElement('a');a.href=cv.toDataURL('image/png');a.download=name;a.click();}
+        btn.classList.remove('loading'); btn.disabled=false;
+        toast('تم تنزيل الرمز بدقة '+px+'×'+px+' بكسل','ok');
+      },'image/png');
+    }catch(e){btn.classList.remove('loading');btn.disabled=false;toast('تعذّر التصدير — جرّب دقة أقل','danger');}
+  },30);
+}
+function downloadSVG(){
+  if(!lastGood)return;
+  try{
+    const svg=buildSVG(lastGood.qr,state.style,state.logo.dataUrl,state.logo.img,1024);
+    saveBlob(new Blob([svg],{type:'image/svg+xml;charset=utf-8'}),'QR-Nasr-'+lastGood.type+'.svg');
+    toast('تم تنزيل SVG متجهي — دقة لا نهائية للطباعة','ok');
+  }catch(e){toast('تعذّر تصدير SVG','danger');}
+}
+function copyImage(){
+  if(!lastGood)return;
+  if(!(window.ClipboardItem&&navigator.clipboard&&navigator.clipboard.write)){toast('متصفحك لا يدعم نسخ الصور — استخدم التحميل','warn');return;}
+  makeCanvas(1024,lastGood.qr).toBlob(b=>{
+    if(!b){toast('تعذّر النسخ','danger');return;}
+    navigator.clipboard.write([new ClipboardItem({'image/png':b})])
+      .then(()=>toast('تم نسخ الصورة — الصقها في أي تطبيق','ok'))
+      .catch(()=>toast('تعذّر النسخ — استخدم زر التحميل','warn'));
+  },'image/png');
+}
+function autoTitle(type,payload,data){
+  try{
+    if(type==='url')return new URL(payload).hostname.replace(/^www\./,'');
+    if(type==='whatsapp')return 'واتساب · +'+data.wa.cc+(data.wa.phone||'').replace(/\D/g,'').replace(/^0+/,'');
+    if(type==='wifi')return 'شبكة '+data.wifi.ssid;
+    return payload.split('\n')[0].slice(0,30)+(payload.length>30?'…':'');
+  }catch(e){return payload.slice(0,30);}
+}
+function downscaleLogo(dataUrl){
+  return new Promise(res=>{
+    if(!dataUrl||dataUrl.length<160000){res(dataUrl);return;}
+    const img=new Image();
+    img.onload=()=>{
+      try{
+        const max=512,s=Math.min(1,max/Math.max(img.naturalWidth,img.naturalHeight));
+        const cv=document.createElement('canvas');cv.width=Math.max(1,Math.round(img.naturalWidth*s));cv.height=Math.max(1,Math.round(img.naturalHeight*s));
+        const cx=cv.getContext('2d');cx.imageSmoothingQuality='high';cx.drawImage(img,0,0,cv.width,cv.height);
+        let out=cv.toDataURL('image/png');
+        if(out.length>400000){cx.globalCompositeOperation='destination-over';cx.fillStyle='#fff';cx.fillRect(0,0,cv.width,cv.height);out=cv.toDataURL('image/jpeg',.87);}
+        res(out);
+      }catch(e){res(null);}
+    };
+    img.onerror=()=>res(null);
+    img.src=dataUrl;
+  });
+}
+async function saveToHistory(){
+  if(!lastGood||saveBusy)return;
+  saveBusy=true;
+  const btn=$('#btnSave');btn.classList.add('loading');
+  try{
+    if(history.some(r=>r.payload===lastGood.payload&&JSON.stringify(r.style)===JSON.stringify(state.style)&&!!r.logo===!!state.logo.dataUrl)){
+      toast('هذا الرمز محفوظ مسبقاً بنفس المظهر','info',{action:{label:'عرض السجل',fn:()=>$('#history').scrollIntoView({behavior:'smooth'})}});
+      return;
+    }
+    const logoStored=state.logo.dataUrl?{dataUrl:await downscaleLogo(state.logo.dataUrl),size:state.logo.size,pad:state.logo.pad}:null;
+    const rec={
+      id:uid(),ts:Date.now(),type:state.type,
+      title:autoTitle(state.type,lastGood.payload,state.data),
+      payload:lastGood.payload,
+      data:JSON.parse(JSON.stringify(state.data)),
+      style:{...state.style,ecc:effEcc()},
+      logo:logoStored,
+      thumb:makeCanvas(160,lastGood.qr).toDataURL('image/png')
+    };
+    history.unshift(rec);
+    if(history.length>24)history.length=24;
+    persist();renderHistory();
+    toast('حُفظ الرمز في سجلّك المحلي','ok',{action:{label:'عرض',fn:()=>$('#history').scrollIntoView({behavior:'smooth'})}});
+  }catch(e){toast('تعذّر الحفظ — قد تكون مساحة التخزين ممتلئة','danger');}
+  finally{saveBusy=false;btn.classList.remove('loading');}
+}
+/* ================= HISTORY ================= */
+function persist(){try{localStorage.setItem(STORE_KEY,JSON.stringify(history));}catch(e){}}
+function loadHistory(){try{const raw=localStorage.getItem(STORE_KEY);if(raw)history=JSON.parse(raw)||[];}catch(e){history=[];}}
+function renderHistory(){
+  const grid=$('#historyGrid'),empty=$('#historyEmpty');
+  $('#historyCount').textContent=fmtAr(history.length);
+  $('#btnClearHistory').disabled=!history.length;
+  const counts={all:history.length,url:0,whatsapp:0,text:0,wifi:0};
+  history.forEach(r=>counts[r.type]=(counts[r.type]||0)+1);
+  $$('#historyChips .h-chip').forEach(ch=>{
+    ch.classList.toggle('on',ch.dataset.filter===historyState.filter);
+    ch.querySelector('small').textContent=fmtAr(counts[ch.dataset.filter]||0);
+  });
+  let list=history.slice();
+  if(historyState.filter!=='all')list=list.filter(r=>r.type===historyState.filter);
+  if(historyState.q){const q=historyState.q.toLowerCase();list=list.filter(r=>(r.title+' '+r.payload).toLowerCase().includes(q));}
+  list.sort((a,b)=>historyState.sort==='new'?b.ts-a.ts:a.ts-b.ts);
+  if(!list.length){
+    grid.innerHTML='';empty.hidden=false;
+    const none=!history.length;
+    $('#hEmptyTitle').textContent=none?'لا توجد رموز محفوظة بعد':'لا نتائج مطابقة';
+    $('#hEmptyDesc').textContent=none?'ولّد رمزك الأول ثم اضغط «حفظ بالسجل» ليظهر هنا.':'جرّب كلمة بحث أخرى أو غيّر نوع التصفية.';
+    $('#hEmptyCta').hidden=!none;$('#btnClearFilters').hidden=none;
+    return;
+  }
+  empty.hidden=true;
+  grid.innerHTML=list.map((r,i)=>{
+    const T=TYPES[r.type]||TYPES.text;
+    return '<article class="hcard" style="--d:'+Math.min(i,8)+'">'+
+      '<div class="hthumb"><img src="'+r.thumb+'" alt="رمز '+esc(r.title)+'" draggable="false" loading="lazy"></div>'+
+      '<div class="hbody"><h4 title="'+esc(r.title)+'">'+esc(r.title)+'</h4>'+
+      '<p class="hsnip" dir="ltr" title="'+esc(r.payload)+'">'+esc(r.payload)+'</p>'+
+      '<div class="hmeta"><span class="badge '+T.cls+'">'+T.label+'</span><time>'+relTime(r.ts)+'</time></div></div>'+
+      '<div class="hactions">'+
+      '<button data-action="restore" data-id="'+r.id+'" title="استعادة وتحرير">'+icon('restore')+'استعادة</button>'+
+      '<button data-action="download" data-id="'+r.id+'" title="تحميل PNG بدقة 1024">'+icon('download')+'تحميل</button>'+
+      '<button data-action="delete" data-id="'+r.id+'" class="danger" title="حذف">'+icon('trash')+'حذف</button>'+
+      '</div></article>';
+  }).join('');
+}
+function findRec(id){return history.find(r=>r.id===id);}
+function loadLogoFrom(dataUrl,name,cb){
+  if(!dataUrl){state.logo.img=null;state.logo.dataUrl=null;state.logo.name='';updateLogoUI();cb&&cb();return;}
+  const img=new Image();
+  img.onload=()=>{state.logo.img=img;state.logo.dataUrl=dataUrl;state.logo.name=name||'شعار محفوظ';updateLogoUI();renderNow();cb&&cb();};
+  img.onerror=()=>{state.logo.img=null;state.logo.dataUrl=null;updateLogoUI();cb&&cb();};
+  img.src=dataUrl;
+}
+function restoreRecord(rec){
+  state.type=rec.type;
+  state.data=JSON.parse(JSON.stringify(rec.data));
+  state.style={...DEFAULT_STYLE,...rec.style};
+  state.logo.size=rec.logo?rec.logo.size:.24;
+  state.logo.pad=rec.logo?rec.logo.pad:true;
+  loadLogoFrom(rec.logo?rec.logo.dataUrl:null,'شعار محفوظ');
+  syncAllInputs();renderNow();
+  $('#generator').scrollIntoView({behavior:'smooth'});
+  toast('تمت استعادة الرمز — عدّله كما تشاء','ok');
+}
+function downloadRecord(rec){
+  if(!libReady){toast('المحرّك غير جاهز بعد','warn');return;}
+  const go=(img)=>{
+    try{
+      const qr=getQR(rec.payload,rec.style.ecc||'Q');
+      saveBlob(null,''); // placeholder removed below
+    }catch(e){}
+    try{
+      const qr=getQR(rec.payload,rec.style.ecc||'Q');
+      makeCanvas(1024,qr,rec.style,img).toBlob(b=>{
+        if(b){saveBlob(b,'QR-Nasr-'+rec.type+'-1024px.png');toast('تم تحميل «'+rec.title+'»','ok');}
+        else toast('تعذّر التحميل','danger');
+      },'image/png');
+    }catch(e){toast('تعذّر توليد الرمز','danger');}
+  };
+  if(rec.logo&&rec.logo.dataUrl){const img=new Image();img.onload=()=>go(img);img.onerror=()=>go(null);img.src=rec.logo.dataUrl;}
+  else go(null);
+}
+function deleteRecord(id){
+  const idx=history.findIndex(r=>r.id===id);
+  if(idx<0)return;
+  const rec=history.splice(idx,1)[0];
+  persist();renderHistory();
+  toast('حُذف «'+rec.title+'»','warn',{dur:6000,action:{label:'تراجع',fn:()=>{
+    history.splice(Math.min(idx,history.length),0,rec);persist();renderHistory();toast('تمت الاستعادة','ok');
+  }}});
+}
+function clearHistory(){
+  if(!history.length)return;
+  const stash=history.slice();
+  history=[];persist();renderHistory();
+  toast('تم مسح السجل ('+fmtAr(stash.length)+' رمزاً)','warn',{dur:6500,action:{label:'تراجع',fn:()=>{
+    history=stash.concat(history).slice(0,24);persist();renderHistory();toast('تمت استعادة السجل','ok');
+  }}});
+}
+function seedIfFirst(){
+  try{if(localStorage.getItem(SEED_KEY))return;}catch(e){return;}
+  try{
+    const mk=(type,payload,data,style,ts,title)=>{
+      const qr=getQR(payload,style.ecc);
+      return {id:uid(),ts:ts,type:type,title:title,payload:payload,data:data,style:style,logo:null,
+        thumb:makeCanvas(160,qr,style,null).toDataURL('image/png')};
+    };
+    history.unshift(
+      mk('url','https://nasr.digital',{url:'https://nasr.digital',wa:{cc:'966',phone:'',msg:''},text:'',wifi:{ssid:'',pass:'',enc:'WPA',hidden:false}},
+        {...DEFAULT_STYLE},Date.now()-3*3600e3,'موقع Nasr Digital'),
+      mk('wifi','WIFI:T:WPA;S:Nasr-Office;P:Nasr@2026;;',{url:'',wa:{cc:'966',phone:'',msg:''},text:'',wifi:{ssid:'Nasr-Office',pass:'Nasr@2026',enc:'WPA',hidden:false}},
+        {...DEFAULT_STYLE,fg:'#0F3D33',dots:'square',eyes:'square'},Date.now()-26*3600e3,'واي فاي المكتب')
+    );
+    history.sort((a,b)=>b.ts-a.ts);
+    persist();
+    try{localStorage.setItem(SEED_KEY,'1');}catch(e){}
+  }catch(e){}
+}
+/* ================= SYNC UI ================= */
+function setRange(el,v){el.value=v;const p=(v-el.min)/(el.max-el.min)*100;el.style.setProperty('--p',p+'%');}
+function buildSwatches(){
+  const mk=(wrapId,presets,key)=>{
+    const w=$('#'+wrapId);
+    w.innerHTML=presets.map(c=>'<button class="swatch" data-c="'+c+'" style="background:'+c+'" title="'+c+'" aria-label="اللون '+c+'"></button>').join('');
+    w.addEventListener('click',e=>{
+      const b=e.target.closest('.swatch');if(!b)return;
+      state.style[key]=b.dataset.c;syncColorRow(key);renderNow();
+    });
+  };
+  mk('fgSwatches',FG_PRESETS,'fg');
+  mk('bgSwatches',BG_PRESETS,'bg');
+}
+function syncColorRow(key){
+  const v=state.style[key];
+  if(key==='fg'){$('#fgColor').value=v;$('#fgHex').value=v;}
+  if(key==='bg'){$('#bgColor').value=v;$('#bgHex').value=v;}
+  if(key==='fg2')$('#fg2Color').value=v;
+  const wrap=key==='fg'?'#fgSwatches':key==='bg'?'#bgSwatches':null;
+  ifwrap: if(wrap)$$(wrap+' .swatch').forEach(s=>s.classList.toggle('on',s.dataset.c.toUpperCase()===v.toUpperCase()));
+}
+function updateTabs(){
+  const btns=$$('#tabsWrap [role=tab]');
+  btns.forEach(b=>b.setAttribute('aria-selected',b.dataset.type===state.type?'true':'false'));
+  ['url','whatsapp','text','wifi'].forEach(t=>{$('#form-'+t).hidden=t!==state.type;});
+  const act=btns.find(b=>b.dataset.type===state.type);
+  const ind=$('#tabInd');
+  if(act){ind.style.left=act.offsetLeft+'px';ind.style.width=act.offsetWidth+'px';}
+}
+function updateLogoUI(){
+  const has=!!state.logo.dataUrl;
+  $('#logoZone').hidden=has;
+  $('#logoPreviewWrap').hidden=!has;
+  if(has){$('#logoThumb').src=state.logo.dataUrl;$('#logoName').textContent=state.logo.name||'شعار';}
+  $('#eccSelect').disabled=has;
+  $('#eccSelect').value=has?'H':state.style.ecc;
+  $('#eccNote').hidden=!has;
+}
+function updateCounters(){
+  const t=state.data.text||'';
+  const b=enc.encode(t).length;
+  const tc=$('#textCount');
+  tc.textContent=fmtAr(t.length)+' حرف · '+fmtAr(b)+' بايت';
+  tc.classList.toggle('warn',b>600);
+  $('#waMsgCount').textContent=(state.data.wa.msg||'').length+'/600';
+}
+function syncAllInputs(){
+  $('#urlInput').value=state.data.url||'';
+  $('#waCC').value=state.data.wa.cc;
+  $('#waPhone').value=state.data.wa.phone||'';
+  $('#waMsg').value=state.data.wa.msg||'';
+  $('#textInput').value=state.data.text||'';
+  $('#wifiSSID').value=state.data.wifi.ssid||'';
+  $('#wifiPass').value=state.data.wifi.pass||'';
+  $('#wifiEnc').value=state.data.wifi.enc;
+  $('#wifiHidden').checked=!!state.data.wifi.hidden;
+  $('#wifiPassField').classList.toggle('disabled-look',state.data.wifi.enc==='nopass');
+  const st=state.style;
+  syncColorRow('fg');syncColorRow('bg');syncColorRow('fg2');
+  $('#gradToggle').checked=st.grad;
+  $('#gradExtra').classList.toggle('open',st.grad);
+  $('#gradExtra').setAttribute('aria-hidden',st.grad?'false':'true');
+  setRange($('#angleRange'),st.angle);$('#angleVal').textContent=st.angle+'°';
+  $('#transparentToggle').checked=st.transparent;
+  $('#bgRow').classList.toggle('disabled-look',st.transparent);
+  $$('#dotsTiles .tile-btn').forEach(b=>b.setAttribute('aria-pressed',b.dataset.dots===st.dots?'true':'false'));
+  $$('#eyesTiles .tile-btn').forEach(b=>b.setAttribute('aria-pressed',b.dataset.eyes===st.eyes?'true':'false'));
+  setRange($('#marginRange'),st.margin);
+  $('#marginVal').textContent=st.margin===0?'بدون هامش':st.margin+' وحدات';
+  setRange($('#logoSizeRange'),Math.round(state.logo.size*100));
+  $('#logoSizeVal').textContent=Math.round(state.logo.size*100)+'٪';
+  $('#logoPadToggle').checked=state.logo.pad;
+  $('#resSelect').value=String(state.exportSize);
+  updateLogoUI();updateTabs();updateCounters();
+}
+/* ================= ACTIONS ================= */
+function setType(t,focus){
+  state.type=t;updateTabs();renderNow();
+  if(focus){
+    const first={url:'#urlInput',whatsapp:'#waPhone',text:'#textInput',wifi:'#wifiSSID'}[t];
+    setTimeout(()=>$(first).focus({preventScroll:true}),60);
+  }
+}
+function applyTemplate(key){
+  const t=TEMPLATES[key];if(!t)return;
+  state.type=t.type;
+  if(t.data.url!==undefined)state.data.url=t.data.url;
+  if(t.data.wa)state.data.wa={...t.data.wa};
+  if(t.data.text!==undefined)state.data.text=t.data.text;
+  if(t.data.wifi)state.data.wifi={...t.data.wifi};
+  Object.assign(state.style,t.style);
+  syncAllInputs();renderNow();
+  $('#generator').scrollIntoView({behavior:'smooth'});
+  toast('تم تطبيق القالب — عدّله كما تشاء ✨','ok');
+}
+function randomize(){
+  const pick=a=>a[Math.floor(Math.random()*a.length)];
+  state.style.fg=pick(FG_PRESETS);
+  state.style.grad=Math.random()<.45;
+  if(state.style.grad){state.style.fg2=pick(['#0E7490','#2563EB','#7C3AED','#DB2777','#D97706','#16A34A']);state.style.angle=pick([45,90,120,135,180,225,315]);}
+  state.style.dots=pick(['square','rounded','dots']);
+  state.style.eyes=pick(['square','rounded','circle']);
+  state.style.margin=pick([3,4,4,5]);
+  syncAllInputs();renderNow();
+  toast('نمط جديد بضغطة نرد 🎲','ok');
+}
+function resetStyle(){
+  state.style={...DEFAULT_STYLE};
+  state.logo.size=.24;state.logo.pad=true;
+  syncAllInputs();renderNow();
+  toast('أُعيد المظهر إلى الوضع الافتراضي','info');
+}
+function invertColors(){
+  const st=state.style;
+  const old=st.fg;st.fg=st.bg;st.bg=old;
+  if(st.grad){const o2=st.fg2;st.fg2=st.bg;st.bg=st.bg;} // نبقي اللون الثاني كما هو
+  syncAllInputs();renderNow();
+  toast('تم عكس الألوان','ok');
+}
+function handleLogoFile(file){
+  if(!file)return;
+  if(!/^image\/(png|jpeg|webp|gif)$/.test(file.type)){toast('صيغة غير مدعومة — استخدم PNG أو JPG أو WEBP','danger');return;}
+  if(file.size>4*1024*1024){toast('حجم الصورة يتجاوز 4MB','danger');return;}
+  const fr=new FileReader();
+  fr.onload=()=>{
+    const img=new Image();
+    img.onload=()=>{
+      state.logo.img=img;state.logo.dataUrl=fr.result;state.logo.name=file.name;
+      updateLogoUI();renderNow();
+      toast('أُضيف الشعار — فعّلنا تصحيح H لحمايته','ok');
+    };
+    img.onerror=()=>toast('تعذّر قراءة الصورة','danger');
+    img.src=fr.result;
+  };
+  fr.onerror=()=>toast('تعذّر قراءة الملف','danger');
+  fr.readAsDataURL(file);
+}
+function removeLogo(){
+  state.logo.img=null;state.logo.dataUrl=null;state.logo.name='';
+  $('#logoInput').value='';
+  updateLogoUI();renderNow();
+  toast('أُزيل الشعار','info');
+}
+/* ================= TOASTS ================= */
+function toast(msg,kind,opts){
+  kind=kind||'ok';opts=opts||{};
+  const wrap=$('#toasts');
+  while(wrap.children.length>=3)wrap.firstChild.remove();
+  const dur=opts.dur||4200;
+  const el=document.createElement('div');
+  el.className='toast '+kind;el.setAttribute('role','status');
+  el.innerHTML=icon(kind==='danger'?'warn':kind,'t-ic')+'<span class="t-msg">'+esc(msg)+'</span>'+
+    (opts.action?'<button class="t-act">'+esc(opts.action.label)+'</button>':'')+
+    '<button class="t-x" aria-label="إغلاق">'+icon('x')+'</button>'+
+    '<span class="t-bar" style="animation-duration:'+dur+'ms"></span>';
+  wrap.appendChild(el);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>el.classList.add('show')));
+  let timer=setTimeout(dismiss,dur);
+  function dismiss(){clearTimeout(timer);el.classList.add('hide');setTimeout(()=>el.remove(),380);}
+  el.querySelector('.t-x').addEventListener('click',dismiss);
+  if(opts.action)el.querySelector('.t-act').addEventListener('click',()=>{opts.action.fn();dismiss();});
+  el.addEventListener('mouseenter',()=>{clearTimeout(timer);el.querySelector('.t-bar').style.animationPlayState='paused';});
+  el.addEventListener('mouseleave',()=>{el.querySelector('.t-bar').style.animationPlayState='running';timer=setTimeout(dismiss,1600);});
+}
+/* ================= HERO ================= */
+let brandLogoImg=null;
+function buildBrandLogo(cb){
+  const cv=document.createElement('canvas');cv.width=cv.height=128;
+  const cx=cv.getContext('2d');
+  const g=cx.createLinearGradient(0,0,128,128);g.addColorStop(0,'#1F8A70');g.addColorStop(1,'#0C3F36');
+  cx.fillStyle=g;
+  if(HAS_P2D)cx.fill(new Path2D(rrectP(4,4,120,120,30)));else cx.fillRect(4,4,120,120);
+  cx.fillStyle='#fff';cx.font='700 72px Rubik, sans-serif';cx.textAlign='center';cx.textBaseline='middle';
+  cx.fillText('N',64,70);
+  const img=new Image();img.onload=()=>{brandLogoImg=img;cb&&cb();};img.src=cv.toDataURL('image/png');
+}
+function renderHero(){
+  if(!libReady)return;
+  try{
+    const payload=location.protocol.indexOf('http')===0?location.href.split('#')[0]:'https://nasr.digital';
+    const qr=getQR(payload,'Q');
+    const st={...DEFAULT_STYLE,grad:true,fg:'#186A5B',fg2:'#0E7490',angle:135,dots:'rounded',eyes:'rounded',margin:3};
+    const savedSize=state.logo.size;
+    const heroSt={...st,logoSize:.22,logoPad:true};
+    paintCanvas($('#heroQr'),qr,heroSt,brandLogoImg,560);
+  }catch(e){}
+}
+/* ================= NAV / SCROLL / OBSERVERS ================= */
+function initObservers(){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.1});
+  $$('.reveal').forEach(el=>io.observe(el));
+  const secIo=new IntersectionObserver(es=>{
+    es.forEach(e=>{
+      if(e.isIntersecting){
+        $$('[data-navlink]').forEach(a=>a.classList.toggle('active',a.dataset.navlink===e.target.id));
+      }
+    });
+  },{rootMargin:'-40% 0px -55% 0px'});
+  ['generator','templates','history','features','faq'].forEach(id=>{const s=document.getElementById(id);if(s)secIo.observe(s);});
+  let ticking=false;
+  window.addEventListener('scroll',()=>{
+    if(ticking)return;ticking=true;
+    requestAnimationFrame(()=>{
+      const y=window.scrollY,h=document.documentElement.scrollHeight-innerHeight;
+      $('#navbar').classList.toggle('scrolled',y>8);
+      $('#navProgress').style.transform='scaleX('+(h>0?clamp(y/h,0,1):0)+')';
+      $('#toTop').classList.toggle('show',y>480);
+      ticking=false;
+    });
+  },{passive:true});
+  let rzT=null;
+  window.addEventListener('resize',()=>{clearTimeout(rzT);rzT=setTimeout(updateTabs,120);});
+  setInterval(()=>{if(history.length&&document.visibilityState==='visible')renderHistory();},60000);
+}
+function closeMenu(){
+  $('#navbar').classList.remove('open');
+  $('#menuBtn').setAttribute('aria-expanded','false');
+  $('#icMenu').hidden=false;$('#icClose').hidden=true;
+}
+/* ================= BINDINGS ================= */
+function bindUI(){
+  // tabs
+  $('#tabsWrap').addEventListener('click',e=>{const b=e.target.closest('[role=tab]');if(b)setType(b.dataset.type,true);});
+  // data inputs
+  $('#urlInput').addEventListener('input',e=>{state.data.url=e.target.value;scheduleRender();});
+  $('#waCC').addEventListener('change',e=>{state.data.wa.cc=e.target.value;renderNow();});
+  $('#waPhone').addEventListener('input',e=>{state.data.wa.phone=e.target.value;scheduleRender();});
+  $('#waMsg').addEventListener('input',e=>{state.data.wa.msg=e.target.value;updateCounters();scheduleRender();});
+  $('#textInput').addEventListener('input',e=>{state.data.text=e.target.value;updateCounters();scheduleRender();});
+  $('#wifiSSID').addEventListener('input',e=>{state.data.wifi.ssid=e.target.value;scheduleRender();});
+  $('#wifiPass').addEventListener('input',e=>{state.data.wifi.pass=e.target.value;scheduleRender();});
+  $('#wifiEnc').addEventListener('change',e=>{state.data.wifi.enc=e.target.value;$('#wifiPassField').classList.toggle('disabled-look',e.target.value==='nopass');renderNow();});
+  $('#wifiHidden').addEventListener('change',e=>{state.data.wifi.hidden=e.target.checked;renderNow();});
+  $('#passToggle').addEventListener('click',()=>{
+    const inp=$('#wifiPass'),show=inp.type==='password';
+    inp.type=show?'text':'password';
+    $('#icEye').hidden=show;$('#icEyeOff').hidden=!show;
+    $('#passToggle').setAttribute('aria-pressed',show?'true':'false');
+    $('#passToggle').setAttribute('aria-label',show?'إخفاء كلمة المرور':'إظهار كلمة المرور');
+  });
+  $('#btnCopyPayload').addEventListener('click',async()=>{
+    if(!lastGood)return;
+    (await copyText(lastGood.payload))?toast('تم نسخ النص المُرمَّز','ok'):toast('تعذّر النسخ','warn');
+  });
+  // colors
+  $('#fgColor').addEventListener('input',e=>{state.style.fg=e.target.value.toUpperCase();syncColorRow('fg');renderNow();});
+  $('#bgColor').addEventListener('input',e=>{state.style.bg=e.target.value.toUpperCase();syncColorRow('bg');renderNow();});
+  $('#fg2Color').addEventListener('input',e=>{state.style.fg2=e.target.value.toUpperCase();renderNow();});
+  const hexBind=(id,key)=>{
+    const el=$('#'+id);
+    el.addEventListener('input',()=>{const v=normHex(el.value);if(v){state.style[key]=v;syncColorRow(key);renderNow();}});
+    el.addEventListener('blur',()=>{el.value=state.style[key];});
+  };
+  hexBind('fgHex','fg');hexBind('bgHex','bg');
+  $('#gradToggle').addEventListener('change',e=>{
+    state.style.grad=e.target.checked;
+    $('#gradExtra').classList.toggle('open',e.target.checked);
+    $('#gradExtra').setAttribute('aria-hidden',e.target.checked?'false':'true');
+    renderNow();
+  });
+  $('#angleRange').addEventListener('input',e=>{state.style.angle=+e.target.value;setRange(e.target,state.style.angle);$('#angleVal').textContent=state.style.angle+'°';renderNow();});
+  $('#transparentToggle').addEventListener('change',e=>{
+    state.style.transparent=e.target.checked;
+    $('#bgRow').classList.toggle('disabled-look',e.target.checked);
+    renderNow();
+  });
+  // tiles
+  $('#dotsTiles').addEventListener('click',e=>{const b=e.target.closest('[data-dots]');if(!b)return;state.style.dots=b.dataset.dots;syncAllInputs();renderNow();});
+  $('#eyesTiles').addEventListener('click',e=>{const b=e.target.closest('[data-eyes]');if(!b)return;state.style.eyes=b.dataset.eyes;syncAllInputs();renderNow();});
+  // margin / ecc
+  $('#marginRange').addEventListener('input',e=>{state.style.margin=+e.target.value;setRange(e.target,state.style.margin);$('#marginVal').textContent=state.style.margin===0?'بدون هامش':state.style.margin+' وحدات';renderNow();});
+  $('#eccSelect').addEventListener('change',e=>{state.style.ecc=e.target.value;renderNow();});
+  // logo
+  const zone=$('#logoZone');
+  zone.addEventListener('click',()=>$('#logoInput').click());
+  zone.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('#logoInput').click();}});
+  ['dragover','dragenter'].forEach(ev=>zone.addEventListener(ev,e=>{e.preventDefault();zone.classList.add('drag');}));
+  ['dragleave','dragend'].forEach(ev=>zone.addEventListener(ev,()=>zone.classList.remove('drag')));
+  zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('drag');handleLogoFile(e.dataTransfer.files[0]);});
+  $('#logoInput').addEventListener('change',e=>{handleLogoFile(e.target.files[0]);e.target.value='';});
+  $('#btnLogoRemove').addEventListener('click',removeLogo);
+  $('#logoSizeRange').addEventListener('input',e=>{state.logo.size=+e.target.value/100;setRange(e.target,+e.target.value);$('#logoSizeVal').textContent=e.target.value+'٪';renderNow();});
+  $('#logoPadToggle').addEventListener('change',e=>{state.logo.pad=e.target.checked;renderNow();});
+  // exports
+  $('#resSelect').addEventListener('change',e=>{state.exportSize=+e.target.value;});
+  $('#btnPNG').addEventListener('click',downloadPNG);
+  $('#barDownload').addEventListener('click',downloadPNG);
+  $('#btnSVG').addEventListener('click',downloadSVG);
+  $('#btnCopyImg').addEventListener('click',copyImage);
+  $('#btnSave').addEventListener('click',saveToHistory);
+  $('#btnRandom').addEventListener('click',randomize);
+  $('#btnReset').addEventListener('click',resetStyle);
+  $('#qrChips').addEventListener('click',e=>{if(e.target.closest('[data-invert]'))invertColors();});
+  // templates
+  $('#templatesGrid').addEventListener('click',e=>{const b=e.target.closest('[data-template]');if(b)applyTemplate(b.dataset.template);});
+  // history
+  $('#historySearch').addEventListener('input',e=>{historyState.q=e.target.value.trim();renderHistory();});
+  $('#historyChips').addEventListener('click',e=>{const b=e.target.closest('[data-filter]');if(!b)return;historyState.filter=b.dataset.filter;renderHistory();});
+  $('#historySort').addEventListener('change',e=>{historyState.sort=e.target.value;renderHistory();});
+  $('#btnClearHistory').addEventListener('click',clearHistory);
+  $('#btnClearFilters').addEventListener('click',()=>{historyState.q='';historyState.filter='all';$('#historySearch').value='';renderHistory();});
+  $('#historyGrid').addEventListener('click',e=>{
+    const b=e.target.closest('[data-action]');if(!b)return;
+    const rec=findRec(b.dataset.id);if(!rec)return;
+    if(b.dataset.action==='restore')restoreRecord(rec);
+    else if(b.dataset.action==='download')downloadRecord(rec);
+    else if(b.dataset.action==='delete')deleteRecord(rec.id);
+  });
+  // faq (حصري)
+  $('#faqList').addEventListener('click',e=>{
+    const q=e.target.closest('.faq-q');if(!q)return;
+    const item=q.parentElement,open=item.classList.contains('open');
+    $$('#faqList .faq-item').forEach(it=>{it.classList.remove('open');it.querySelector('.faq-q').setAttribute('aria-expanded','false');});
+    if(!open){item.classList.add('open');q.setAttribute('aria-expanded','true');}
+  });
+  // footer / share / nav
+  $('#footTypes').addEventListener('click',e=>{
+    const b=e.target.closest('[data-gotype]');if(!b)return;
+    setType(b.dataset.gotype,false);
+    $('#generator').scrollIntoView({behavior:'smooth'});
+  });
+  $('#btnShare').addEventListener('click',async()=>{
+    const url=location.href.split('#')[0];
+    const data={title:'صانع QR - Nasr Digital',text:'ولّد رموز QR مجانية بشعارك وألوانك 🟢',url:url};
+    if(navigator.share){try{await navigator.share(data);}catch(e){}}
+    else (await copyText(url))?toast('تم نسخ رابط التطبيق — شاركه الآن','ok'):toast('تعذّر النسخ','warn');
+  });
+  $('#toTop').addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+  $('#menuBtn').addEventListener('click',()=>{
+    const open=$('#navbar').classList.toggle('open');
+    $('#menuBtn').setAttribute('aria-expanded',open?'true':'false');
+    $('#icMenu').hidden=open;$('#icClose').hidden=!open;
+  });
+  $('#mobileMenu').addEventListener('click',e=>{if(e.target.closest('a'))closeMenu();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeMenu();});
+  document.addEventListener('click',e=>{if($('#navbar').classList.contains('open')&&!$('#navbar').contains(e.target))closeMenu();});
+  $('#heroCard').addEventListener('click',()=>$('#generator').scrollIntoView({behavior:'smooth'}));
+  $('#btnRetryLib').addEventListener('click',bootLib);
+}
+/* ================= BOOT ================= */
+function bootLib(){
+  if(libLoading)return;
+  libLoading=true;
+  showOverlay('load');
+  loadLib().then(()=>{
+    libReady=true;libLoading=false;
+    seedIfFirst();renderHistory();renderNow();renderHero();
+  }).catch(()=>{
+    libLoading=false;libReady=false;
+    showOverlay('lib');setExportsEnabled(false);
+    toast('تعذّر تحميل محرّك التوليد — تحقّق من الاتصال ثم أعد المحاولة','danger',{dur:6000});
+  });
+}
+function boot(){
+  // بناء القوائم
+  $('#waCC').innerHTML=CC.map(c=>'<option value="'+c[0]+'">'+c[1]+' +'+c[0]+'</option>').join('');
+  $('#waCC').title='مفتاح الدولة';
+  buildSwatches();
+  loadHistory();
+  bindUI();
+  syncAllInputs();
+  renderHistory();
+  initObservers();
+  $('#yearNow').textContent=new Date().getFullYear();
+  renderNow(); // يُظهر شاشة التحميل حتى جهوزية المحرك
+  bootLib();
+  buildBrandLogo(()=>renderHero());
+  if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{updateTabs();buildBrandLogo(()=>renderHero());});
+}
+boot();
+})();
+</script>
+</body>
+</html>
